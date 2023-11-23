@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'quiz_page.dart';
+import 'package:projectssrk/data/quiz_data.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -20,8 +22,24 @@ class HomePage extends StatelessWidget {
           icon: Icon(Icons.logout),
         )
       ]),
-      body: Center(child: Text("home page, logged in as: "+user.email!,
-      style: TextStyle(fontSize: 20),)),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QuizPage(questions: questions),
+                  ),
+                );
+              },
+              child: Text('Start Quiz'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
