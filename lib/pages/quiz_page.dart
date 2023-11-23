@@ -52,9 +52,12 @@ class _QuizPageState extends State<QuizPage> {
             Column(
               children: List.generate(
                 widget.questions[currentQuestionIndex].options.length,
-                (index) => ElevatedButton(
-                  onPressed: () => checkAnswer(index),
-                  child: Text(widget.questions[currentQuestionIndex].options[index]),
+                (index) => Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  child: ElevatedButton(
+                    onPressed: () => checkAnswer(index),
+                    child: Text(widget.questions[currentQuestionIndex].options[index]),
+                  ),
                 ),
               ),
             ),
