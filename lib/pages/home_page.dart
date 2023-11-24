@@ -18,21 +18,30 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(actions: [
-        IconButton(
-          onPressed: signUserOut,
-          icon: Icon(Icons.logout),
+        Row(
+          children: [
+            Text(
+              "Welcome to our quizzes!",
+              style: TextStyle(fontSize: 20),
+            ),
+            IconButton(
+              onPressed: signUserOut,
+              icon: Icon(Icons.logout),
+            ),
+          ],
         )
       ]),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                QuizTypeButton(button_color: Colors.pink, button_text: 'Quiz on spelling'),
-                QuizTypeButton(button_color: Colors.green, button_text: 'Quiz on counting')
-              ],
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            QuizTypeButton(
+              button_color: Colors.pink,
+              button_text: 'Quiz on spelling',
+            ),
+            QuizTypeButton(
+              button_color: Colors.green,
+              button_text: 'Quiz on counting',
             ),
           ],
         ),
