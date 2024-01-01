@@ -71,150 +71,104 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.grey[300],
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 50,
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('lib/images/register.png'), fit: BoxFit.cover),
+      ),
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
+            child: SafeArea(
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    
+                    const SizedBox(
+                    height: 110,
                   ),
-
-                  //logo
-                  const Icon(
-                    Icons.lock,
-                    size: 100,
-                  ),
-
-                  const SizedBox(height: 50),
-
-                  //welcome back, you;ve been missed
-                  Text(
-                    "Lreate an account",
-                    style: TextStyle(
-                      color: Colors.grey.shade700,
-                      fontSize: 16,
+                   Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                    child: Text(
+                      'Welcome\nBack',
+                      style: TextStyle(color: Colors.white, fontSize: 33),
                     ),
                   ),
-
-                  const SizedBox(height: 25),
-
-                  //username textfield
-                  MyTextField(
-                    controller: emailController,
-                    hintText: 'Email',
-                    obscureText: false,
-                  ),
-
-                  const SizedBox(
-                    height: 10,
-                  ),
-
-                  //password textfield
-                  MyTextField(
-                    controller: passwordController,
-                    hintText: 'Password',
-                    obscureText: true,
-                  ),
-
-                  const SizedBox(
-                    height: 10,
-                  ),
-
-                  //confirm password
-                  MyTextField(
-                    controller: confirmPasswordController,
-                    hintText: 'Confirm Password',
-                    obscureText: true,
-                  ),
-
-                  const SizedBox(
-                    height: 10,
-                  ),
-
-
-                  const SizedBox(height: 25),
-
-                  //sign in button
-                  MyButton(
-                    text: "sign Up",
-                    onTap: signUserUp,
-                  ),
-
-                  const SizedBox(height: 50),
-
-                  //or continue with
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Row(
+                  const SizedBox(height: 220),
+                    //username textfield
+                    MyTextField(
+                      controller: emailController,
+                      hintText: 'Email',
+                      obscureText: false,
+                    ),
+      
+                    const SizedBox(
+                      height: 20,
+                    ),
+      
+                    //password textfield
+                    MyTextField(
+                      controller: passwordController,
+                      hintText: 'Password',
+                      obscureText: true,
+                    ),
+      
+                    const SizedBox(
+                      height: 10,
+                    ),
+      
+                    //confirm password
+                    MyTextField(
+                      controller: confirmPasswordController,
+                      hintText: 'Confirm Password',
+                      obscureText: true,
+                    ),
+      
+                    const SizedBox(
+                      height: 10,
+                    ),
+      
+      
+                    const SizedBox(height: 25),
+      
+                    //sign in button
+                    MyButton(
+                      text: "sign Up",
+                      onTap: signUserUp,
+                    ),
+      
+                    const SizedBox(height: 50),
+      
+                    //or continue with
+                    
+      
+                    //not a member? register here
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Colors.grey[400],
-                          ),
+                        Text(
+                          "Already have an account?",
+                          style: TextStyle(color: Colors.grey[700]),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text(
-                            'Or continue with',
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        GestureDetector(
+                          onTap: widget.onTap,
+                          child: const Text(
+                            "Login now",
                             style: TextStyle(
-                              color: Colors.grey[400],
-                            ),
+                                color: Colors.blue, fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Colors.grey[400],
-                          ),
-                        ),
+                        )
                       ],
-                    ),
-                  ),
-
-                  const SizedBox(
-                    height: 50,
-                  ),
-
-                  //google sign in buttons
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [SquareTile(imagePath: 'lib/images/google.png')],
-                  ),
-
-                  const SizedBox(
-                    height: 50,
-                  ),
-
-                  //not a member? register here
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Already have an account?",
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      GestureDetector(
-                        onTap: widget.onTap,
-                        child: const Text(
-                          "Login now",
-                          style: TextStyle(
-                              color: Colors.blue, fontWeight: FontWeight.bold),
-                        ),
-                      )
-                    ],
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 }
