@@ -87,7 +87,7 @@ Widget build(BuildContext context) {
                     height: 110,
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                     child: Text(
                       'Welcome\nBack',
                       style: TextStyle(color: Colors.white, fontSize: 33),
