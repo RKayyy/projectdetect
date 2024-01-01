@@ -64,37 +64,36 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.grey[300],
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Center(
+Widget build(BuildContext context) {
+  return Container(
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage('lib/images/login.png'),
+        fit: BoxFit.cover,
+      ),
+    ),
+    child: Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 50,
+                    height: 110,
                   ),
-
-                  //logo
-                  const Icon(
-                    Icons.lock,
-                    size: 100,
-                  ),
-
-                  const SizedBox(height: 50),
-
-                  //welcome back, you;ve been missed
-                  Text(
-                    "Welcome back",
-                    style: TextStyle(
-                      color: Colors.grey.shade700,
-                      fontSize: 16,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: Text(
+                      'Welcome\nBack',
+                      style: TextStyle(color: Colors.white, fontSize: 33),
                     ),
                   ),
-
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 220),
 
                   //username textfield
                   MyTextField(
@@ -104,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                   const SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
 
                   //password textfield
@@ -119,17 +118,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                   //forgot password
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Forgot Password?',
-                          style: TextStyle(color: Colors.grey[600]),
-                        ),
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Forgot Password?',
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                    ],
                   ),
 
                   const SizedBox(height: 25),
@@ -142,59 +138,14 @@ class _LoginPageState extends State<LoginPage> {
 
                   const SizedBox(height: 50),
 
-                  //or continue with
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Colors.grey[400],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text(
-                            'Or continue with',
-                            style: TextStyle(
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Colors.grey[400],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(
-                    height: 50,
-                  ),
-
-                  //google sign in buttons
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [SquareTile(imagePath: 'lib/images/google.png')],
-                  ),
-
-                  const SizedBox(
-                    height: 50,
-                  ),
-
                   //not a member? register here
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                          "Not a member?",
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                     
+                        "Not a member?",
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
                       const SizedBox(
                         width: 4,
                       ),
@@ -203,15 +154,21 @@ class _LoginPageState extends State<LoginPage> {
                         child: const Text(
                           "Register now",
                           style: TextStyle(
-                              color: Colors.blue, fontWeight: FontWeight.bold),
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   )
                 ],
               ),
             ),
           ),
-        ));
-  }
+        ),
+      ),
+    ),
+  );
+}
+
 }
