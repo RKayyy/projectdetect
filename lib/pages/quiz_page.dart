@@ -13,13 +13,14 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   int currentQuestionIndex = 0;
-  List<bool?> userAnswers = []; // List to store user answers
+  List<double> userAnswers = []; // List to store user answers
 
   void checkAnswer(int selectedOptionIndex) {
+    double weight = widget.questions[currentQuestionIndex].weight;
     bool isCorrect = (selectedOptionIndex == widget.questions[currentQuestionIndex].correctAnswerIndex);
 
     setState(() {
-      userAnswers.add(isCorrect);
+      userAnswers.add(isCorrect ? weight : 0.0);
       if (currentQuestionIndex < widget.questions.length - 1) {
         currentQuestionIndex++;
       } else {

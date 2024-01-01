@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class QuizResultPage extends StatelessWidget {
-  final List<bool?> userAnswers;
+  final List<double> userAnswers;
 
   const QuizResultPage({Key? key, required this.userAnswers}) : super(key: key);
 
