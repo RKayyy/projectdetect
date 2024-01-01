@@ -37,11 +37,13 @@ class HomePage extends StatelessWidget {
           children: [
             QuizTypeButton(
               button_color: Colors.pink,
-              button_text: 'Quiz on spelling',
+              button_text: 'Quiz on coloring',
+              questions: questions_color,
             ),
             QuizTypeButton(
               button_color: Colors.green,
               button_text: 'Quiz on counting',
+              questions: questions_count,
             ),
           ],
         ),

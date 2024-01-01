@@ -45,9 +45,10 @@ class _QuizPageState extends State<QuizPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            Image.asset(
               widget.questions[currentQuestionIndex].questionText,
-              style: TextStyle(fontSize: 20.0),
+              width: 200, // Adjust the width as needed
+              height: 200, // Adjust the height as needed
             ),
             SizedBox(height: 20.0),
             Column(

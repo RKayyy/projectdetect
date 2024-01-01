@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:projectssrk/pages/quiz_page.dart';
 import 'package:projectssrk/data/quiz_data.dart';
+import 'package:projectssrk/models/question.dart';
 
 class QuizTypeButton extends StatelessWidget {
   final String button_text;
   final Color button_color;
+  final List<Question> questions; // New parameter to hold the questions
 
   const QuizTypeButton({
     Key? key,
     required this.button_color,
     required this.button_text,
+    required this.questions, // Updated constructor to take questions
   }) : super(key: key);
 
   @override
@@ -29,7 +32,7 @@ class QuizTypeButton extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => QuizPage(questions: questions_spell),
+              builder: (context) => QuizPage(questions: questions),
             ),
           );
         },
