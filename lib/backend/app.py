@@ -1,49 +1,45 @@
+# app.py (Flask backend)
+
 from flask import Flask, request, jsonify
 import pickle
-import numpy as np
-from skfuzzy import control as ctrl
 from flask_cors import CORS 
+import numpy as np
 
 app = Flask(__name__)
 CORS(app) 
 
-# Load the fuzzy control systems from the pickle file
-with open('fuzzy_models.pkl', 'rb') as file:
-    loaded_models_dict = pickle.load(file)
+def apply_fuzzy_logic_system(counting_input, color_input, simulator):
+    # Use the mean of input lists for counting and coloring abilities
+    simulator.input['Counting_Ability'] = np.mean(counting_input)
+    simulator.input['Color_Ability'] = np.mean(color_input)
+    simulator.compute()
 
-# Access each model by its key
-loaded_counting_model = loaded_models_dict['counting_model']
-loaded_coloring_model = loaded_models_dict['coloring_model']
-loaded_combined_model = loaded_models_dict['combined_model']
+    return simulator.output['Percentage']
 
-def apply_fuzzy_logic(model, counting_input, color_input):
-    model.input['Counting_Ability'] = np.mean(counting_input)
-    model.input['Color_Ability'] = np.mean(color_input)
-    model.compute()
-    return model.output['Percentage']
+# Load the fuzzy model from the pickle file
+with open('fuzzy_model.pkl', 'rb') as file:
+    loaded_fuzzy_simulator = pickle.load(file)
 
 @app.route('/')
-def index():
-    return 'Welcome to Fuzzy Logic API'
+def main_page():
+    return 'Hello world'
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = request.get_json()
+    try:
+        data = request.get_json()
 
-    counting_input = data['counting_input']
-    color_input = data['color_input']
+        # Assuming the 'userAnswers' field is a list of booleans
+        counting_input = data['counting_input']
+        color_input = data['color_input']
 
-    prediction_counting = apply_fuzzy_logic(loaded_counting_model, counting_input, color_input)
-    prediction_coloring = apply_fuzzy_logic(loaded_coloring_model, counting_input, color_input)
-    prediction_combined = apply_fuzzy_logic(loaded_combined_model, counting_input, color_input)
+        # Apply the trained fuzzy logic system on the new input
+        prediction = apply_fuzzy_logic_system(counting_input, color_input, loaded_fuzzy_simulator)
 
-    result = {
-        'prediction_counting': prediction_counting,
-        'prediction_coloring': prediction_coloring,
-        'prediction_combined': prediction_combined
-    }
+        return jsonify({'prediction': prediction})
 
-    return jsonify(result)
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
     app.run(debug=True)
