@@ -60,12 +60,15 @@ class _QuizPageState extends State<QuizPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset(
-              widget.questions[currentQuestionIndex].questionText,
-              width: 200, // Adjust the width as needed
-              height: 200, // Adjust the height as needed
+            Transform.scale(
+              scale: 1.25,
+              child: Image.asset(
+                widget.questions[currentQuestionIndex].questionText,
+                width: 200, // Adjust the width as needed
+                height: 200, // Adjust the height as needed
+              ),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 40.0),
             Column(
               children: List.generate(
                 widget.questions[currentQuestionIndex].options.length,
