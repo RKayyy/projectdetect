@@ -4,44 +4,42 @@ import 'package:http/http.dart' as http;
 import 'dart:convert'; // For JSON encoding
 
 class QuizResultPage extends StatelessWidget {
-  final List<double> userAnswers;
+  final Map<String, List<double>> userAnswers;
 
   const QuizResultPage({Key? key, required this.userAnswers}) : super(key: key);
 
-  Future<void> sendQuizResults(List<double?> userAnswers) async {
+  Future<void> sendQuizResults(Map<String, List<double>> userAnswers) async {
     try {
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/predict'), // Replace with your Flask backend URL
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode({
-        'counting_input': userAnswers,
-        'color_input': userAnswers,
-      }),
-    );
+      final response = await http.post(
+        Uri.parse(
+            'http://127.0.0.1:5000/predict'), // Replace with your Flask backend URL
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'counting_input': userAnswers['counting'],
+          'color_input': userAnswers['coloring'],
+        }),
+      );
 
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
 
-    if (response.statusCode == 200) {
-      // Parse the response and handle the prediction as needed
-      Map<String, dynamic> data = json.decode(response.body);
-      double prediction = data['prediction'];
-      print('Prediction: $prediction');
-    } else {
-      throw Exception('Failed to submit quiz results');
+      if (response.statusCode == 200) {
+        // Parse the response and handle the prediction as needed
+        Map<String, dynamic> data = json.decode(response.body);
+        double prediction = data['prediction'];
+        print('Prediction: $prediction');
+      } else {
+        throw Exception('Failed to submit quiz results');
+      }
+    } catch (e) {
+      print('Error from quiz_result_page.dart: $e');
     }
-  } catch (e) {
-    print('Error from quiz_result_page.dart: $e');
   }
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
-    int correctAnswers = userAnswers.where((answer) => answer == true).length;
     int totalQuestions = userAnswers.length;
 
     return Scaffold(
@@ -58,21 +56,38 @@ class QuizResultPage extends StatelessWidget {
             ),
             SizedBox(height: 20.0),
             Text(
-              'You answered $correctAnswers out of $totalQuestions questions correctly.',
-              style: TextStyle(fontSize: 18.0),
-              textAlign: TextAlign.center,
-            ),
-            Text(
               'your answers are: $userAnswers',
             ),
             SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () async {
-                await sendQuizResults(userAnswers);
-                Navigator.popUntil(context, ModalRoute.withName('/')); // Go back to home page
-              },
-              child: Text('Submit Quiz Results'),
-            ),
+            (userAnswers['counting'] != null &&
+                    userAnswers['coloring'] != null &&
+                    userAnswers['counting']!.isNotEmpty &&
+                    userAnswers['coloring']!.isNotEmpty)
+                ? ElevatedButton(
+                    onPressed: () async {
+                      if (userAnswers['counting'] != null &&
+                          userAnswers['coloring'] != null &&
+                          userAnswers['counting']!.isNotEmpty &&
+                          userAnswers['coloring']!.isNotEmpty) {
+                        await sendQuizResults(userAnswers);
+                        Navigator.popUntil(context,
+                            ModalRoute.withName('/')); // Go back to home page
+                      } else {
+                        // Display a message or handle the case where one or both lists are null
+                        print('Please answer all questions before submitting.');
+                      }
+                    },
+                    child: Text('Submit Quiz Results'),
+                  )
+                : ElevatedButton(
+                    onPressed: () async {
+                      
+                        Navigator.popUntil(context,
+                            ModalRoute.withName('/')); // Go back to home page
+                      
+                    },
+                    child: Text('Go to Home'),
+                  ),
           ],
         ),
       ),
