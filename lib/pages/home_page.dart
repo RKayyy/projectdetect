@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:projectssrk/components/quiztype_button.dart';
 import 'quiz_page.dart';
 import 'package:projectssrk/data/quiz_data.dart';
+import 'package:projectssrk/models/answers.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -39,11 +40,13 @@ class HomePage extends StatelessWidget {
               button_color: Colors.pink,
               button_text: 'Quiz on coloring',
               questions: questions_color,
+              quizType: 'coloring',
             ),
             QuizTypeButton(
               button_color: Colors.green,
               button_text: 'Quiz on counting',
               questions: questions_count,
+              quizType: 'counting'
             ),
           ],
         ),

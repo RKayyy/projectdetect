@@ -30,7 +30,7 @@ final List<Question> questions_color = [
       questionText: 'lib/images/ques_color_1.png',
       options: ['3', '4', '5', '6'],
       correctAnswerIndex: 3,
-      weight: 3.5
+      weight: 4.5
     ),
 
     // Add more questions similarly
@@ -65,7 +65,7 @@ final List<Question> questions_color = [
       questionText: 'lib/images/ques_count_1.png',
       options: ['3', '4', '5', '6'],
       correctAnswerIndex: 3,
-      weight: 3.5
+      weight: 4.5
     ),
 
     // Add more questions similarly

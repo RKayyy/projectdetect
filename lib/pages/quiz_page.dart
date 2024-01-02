@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import '../models/question.dart';
 import 'quiz_result_page.dart'; // New screen for quiz result
 
+import 'package:projectssrk/models/answers.dart';
+
 class QuizPage extends StatefulWidget {
   final List<Question> questions;
+  final String quizType;
 
-  const QuizPage({Key? key, required this.questions}) : super(key: key);
+  const QuizPage({Key? key, required this.questions, required this.quizType}) : super(key: key);
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -13,14 +16,26 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   int currentQuestionIndex = 0;
-  List<double> userAnswers = []; // List to store user answers
-
+  
   void checkAnswer(int selectedOptionIndex) {
     double weight = widget.questions[currentQuestionIndex].weight;
     bool isCorrect = (selectedOptionIndex == widget.questions[currentQuestionIndex].correctAnswerIndex);
 
     setState(() {
-      userAnswers.add(isCorrect ? weight : 0.0);
+      if (widget.quizType == 'counting') {
+        if(userAnswers['counting']?.length == 5){
+          userAnswers['counting'] = [];
+        }
+        userAnswers['counting']?.add(isCorrect ? weight : 0.0);
+        
+      } else if (widget.quizType == 'coloring') {
+        if(userAnswers['coloring']?.length == 5){
+          userAnswers['coloring'] = [];
+        }
+        userAnswers['coloring']?.add(isCorrect ? weight : 0.0);
+        
+      }
+
       if (currentQuestionIndex < widget.questions.length - 1) {
         currentQuestionIndex++;
       } else {

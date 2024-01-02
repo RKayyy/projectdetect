@@ -7,12 +7,14 @@ class QuizTypeButton extends StatelessWidget {
   final String button_text;
   final Color button_color;
   final List<Question> questions; // New parameter to hold the questions
+  final String quizType;
 
   const QuizTypeButton({
     Key? key,
     required this.button_color,
     required this.button_text,
     required this.questions, // Updated constructor to take questions
+    required this.quizType,
   }) : super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class QuizTypeButton extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => QuizPage(questions: questions),
+              builder: (context) => QuizPage(questions: questions, quizType: quizType),
             ),
           );
         },
