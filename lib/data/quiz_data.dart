@@ -3,33 +3,33 @@ import '../models/question.dart';
 
 final List<Question> questions_color = [
     Question(
-      questionText: 'lib/images/ques_color_1.png',
-      options: ['3', '4', '5', '6'],
-      correctAnswerIndex: 0,
+      questionText: 'lib/images/ques_1_color.png',
+      options: ['three', 'nine', 'eight', 'six'],
+      correctAnswerIndex: 2,
       weight: 0.5
     ),
     Question(
-      questionText: 'lib/images/ques_color_1.png',
-      options: ['3', '4', '5', '6'],
-      correctAnswerIndex: 1,
+      questionText: 'lib/images/ques_2_color.png',
+      options: ['2', '1', '3'],
+      correctAnswerIndex: 0,
       weight: 1.5
     ),
     Question(
-      questionText: 'lib/images/ques_color_1.png',
-      options: ['3', '4', '5', '6'],
-      correctAnswerIndex: 2,
+      questionText: 'lib/images/ques_3_color.png',
+      options: ['triangle', 'circle', 'square', 'arrow'],
+      correctAnswerIndex: 0,
       weight: 2.5
     ),
     Question(
-      questionText: 'lib/images/ques_color_1.png',
-      options: ['3', '4', '5', '6'],
+      questionText: 'lib/images/ques_4_color.png',
+      options: ['duck', 'ball', 'horse', 'fish'],
       correctAnswerIndex: 3,
       weight: 3.5
     ),
     Question(
-      questionText: 'lib/images/ques_color_1.png',
-      options: ['3', '4', '5', '6'],
-      correctAnswerIndex: 3,
+      questionText: 'lib/images/ques_5_color.png',
+      options: ['4', '2', '1', '3'],
+      correctAnswerIndex: 1,
       weight: 4.5
     ),
 
