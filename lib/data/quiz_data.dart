@@ -52,13 +52,13 @@ final List<Question> questions_color = [
     Question(
       questionText: 'lib/images/ques_3_count.png',
       options: ['10', '12', '8', '9'],
-      correctAnswerIndex: 2,
+      correctAnswerIndex: 0,
       weight: 2.5
     ),
     Question(
       questionText: 'lib/images/ques_4_count.png',
       options: ['6,3,9,8', '3,6,8,9', '8,3,6,9', '9,8,3,6'],
-      correctAnswerIndex: 3,
+      correctAnswerIndex: 1,
       weight: 3.5
     ),
     Question(
