@@ -26,13 +26,13 @@ class _QuizPageState extends State<QuizPage> {
         if(userAnswers['counting']?.length == 5){
           userAnswers['counting'] = [];
         }
-        userAnswers['counting']?.add(isCorrect ? weight : 0.0);
+        userAnswers['counting']?.add(isCorrect ? 1.0 : 0.0);
         
       } else if (widget.quizType == 'coloring') {
         if(userAnswers['coloring']?.length == 5){
           userAnswers['coloring'] = [];
         }
-        userAnswers['coloring']?.add(isCorrect ? weight : 0.0);
+        userAnswers['coloring']?.add(isCorrect ? 1.0 : 0.0);
         
       }
 
