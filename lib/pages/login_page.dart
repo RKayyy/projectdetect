@@ -68,7 +68,7 @@ Widget build(BuildContext context) {
   return Container(
     decoration: BoxDecoration(
       image: DecorationImage(
-        image: AssetImage('lib/images/login.png'),
+        image: AssetImage('lib/images/giraffe background.png'),
         fit: BoxFit.cover,
       ),
     ),
@@ -90,7 +90,7 @@ Widget build(BuildContext context) {
                     padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                     child: Text(
                       'Welcome\nBack',
-                      style: TextStyle(color: Colors.white, fontSize: 33),
+                      style: TextStyle(color: const Color.fromARGB(255, 23, 0, 0), fontSize: 33),
                     ),
                   ),
                   const SizedBox(height: 220),
