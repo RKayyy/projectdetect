@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert'; // For JSON encoding
+import 'dart:convert';
+import 'package:projectssrk/pages/home_page.dart'; // For JSON encoding
 
 class QuizResultPage extends StatefulWidget {
   final Map<String, List<double>> userAnswers;
-
-  const QuizResultPage({Key? key, required this.userAnswers}) : super(key: key);
+  final String quizType;
+  const QuizResultPage(
+      {Key? key, required this.userAnswers, required this.quizType})
+      : super(key: key);
 
   @override
   _QuizResultPageState createState() => _QuizResultPageState();
@@ -13,7 +16,8 @@ class QuizResultPage extends StatefulWidget {
 
 class _QuizResultPageState extends State<QuizResultPage> {
   double? prediction;
-  bool quizSubmitted = false; // Track whether quiz answers have been submitted
+  bool quizSubmitted = false;
+  
 
   Future<void> sendQuizResults(Map<String, List<double>> userAnswers) async {
     try {
@@ -68,52 +72,57 @@ class _QuizResultPageState extends State<QuizResultPage> {
             ),
             SizedBox(height: 20.0),
             Text(
-              'Your answers are: ${widget.userAnswers}',
+              (widget.quizType == 'counting')
+                  ? 'Your total score for counting questions is ${
+                    ((widget.userAnswers['counting']!.fold(0.0, (sum, score) => sum + score)/12.5)*100).toString()
+                    } % '
+                  : 'Your total score for coloring questions is ${
+                    ((widget.userAnswers['coloring']!.fold(0.0, (sum, score) => sum + score)/12.5)*100).toString()
+                    } %',
+              style: TextStyle(fontSize: 16.0),
             ),
+            Text(
+            'Your answers are: ${widget.userAnswers}',
+            ),
+
             SizedBox(height: 20.0),
             (widget.userAnswers['counting'] != null &&
                     widget.userAnswers['coloring'] != null &&
                     widget.userAnswers['counting']!.isNotEmpty &&
                     widget.userAnswers['coloring']!.isNotEmpty)
-                ? Column(
-                    children: [
-                      quizSubmitted
-                          ? Container()
-                          : ElevatedButton(
-                              onPressed: () async {
-                                if (widget.userAnswers['counting'] != null &&
-                                    widget.userAnswers['coloring'] != null &&
-                                    widget.userAnswers['counting']!.isNotEmpty &&
-                                    widget.userAnswers['coloring']!.isNotEmpty) {
-                                  await sendQuizResults(widget.userAnswers);
-                                  // No need to navigate back immediately, as the "Go to Home" button will appear
-                                } else {
-                                  // Display a message or handle the case where one or both lists are null
-                                  print('Please answer all questions before submitting.');
-                                }
-                              },
-                              child: Text('Submit Quiz Results'),
+                ? ElevatedButton(
+                    onPressed: () async {
+                      if (widget.userAnswers['counting'] != null &&
+                          widget.userAnswers['coloring'] != null &&
+                          widget.userAnswers['counting']!.isNotEmpty &&
+                          widget.userAnswers['coloring']!.isNotEmpty) {
+                        await sendQuizResults(widget.userAnswers);
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(
+                              listfromresult: widget.userAnswers,
                             ),
-                      SizedBox(height: 20.0),
-                      quizSubmitted
-                          ? ElevatedButton(
-                              onPressed: () async {
-                                Navigator.popUntil(
-                                    context, ModalRoute.withName('/'));
-                              },
-                              child: Text('Go to Home'),
-                            )
-                          : Container(),
-                      SizedBox(height: 20.0),
-                      prediction != null
-                          ? Text('Prediction: $prediction')
-                          : Container(),
-                    ],
+                          ),
+                        ); // Go back to home page
+                      } else {
+                        // Display a message or handle the case where one or both lists are null
+                        print('Please answer all questions before submitting.');
+                      }
+                    },
+                    child: Text('Submit Quiz Results'),
                   )
                 : ElevatedButton(
                     onPressed: () async {
-                      Navigator.popUntil(context,
-                          ModalRoute.withName('/')); // Go back to home page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(
+                            listfromresult: widget.userAnswers,
+                          ),
+                        ),
+                      ); // Go back to home page
                     },
                     child: Text('Go to Home'),
                   ),

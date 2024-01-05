@@ -43,7 +43,7 @@ class _QuizPageState extends State<QuizPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => QuizResultPage(userAnswers: userAnswers),
+            builder: (context) => QuizResultPage(userAnswers: userAnswers,quizType: widget.quizType),
           ),
         );
       }

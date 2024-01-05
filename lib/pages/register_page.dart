@@ -74,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('lib/images/register.png'), fit: BoxFit.cover),
+            image: AssetImage('lib/images/giraffe background.png'), fit: BoxFit.cover),
       ),
       child: Scaffold(
           backgroundColor: Colors.transparent,
@@ -91,8 +91,8 @@ class _RegisterPageState extends State<RegisterPage> {
                    Padding(
                     padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                     child: Text(
-                      'Welcome\nBack',
-                      style: TextStyle(color: Colors.white, fontSize: 33),
+                      'Welcome',
+                      style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0), fontSize: 33),
                     ),
                   ),
                   const SizedBox(height: 220),
