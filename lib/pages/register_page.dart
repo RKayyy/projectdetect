@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:projectssrk/components/my_button.dart';
 import 'package:projectssrk/components/my_textfield.dart';
 import 'package:projectssrk/components/square_tile.dart';
+import 'package:projectssrk/pages/user_details_page.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -21,36 +22,35 @@ class _RegisterPageState extends State<RegisterPage> {
 
   // sign user in method(function for onTap property and onTap prop for my_button)
   void signUserUp() async {
-    //show loading circle
-    showDialog(
-        context: context,
-        builder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        });
+  showDialog(
+    context: context,
+    builder: (context) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    });
 
-    //try signin
-    try {
-      //check if the password and confirm password are same
-      if (passwordController.text == confirmPasswordController.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
-      } else {
-        //showerror message, passwords don't match
-        showErrorMessage("Passwords don't match");
-      }
-      //pop the circle
-      Navigator.pop(context);
-    } on FirebaseAuthException catch (e) {
-      //pop the circle
-      Navigator.pop(context);
-      //show error message
-      showErrorMessage(e.code);
+  try {
+    if (passwordController.text == confirmPasswordController.text) {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      Navigator.pop(context); // Close the loading circle
+
+      // Navigate to UserDetailsPage after successful registration
+      navigateToUserDetailsPage();
+    } else {
+      Navigator.pop(context); // Close the loading circle
+      showErrorMessage("Passwords don't match");
     }
+  } on FirebaseAuthException catch (e) {
+    Navigator.pop(context); // Close the loading circle
+    showErrorMessage(e.code);
   }
+}
+
 
   //show error message
   void showErrorMessage(String message) {
@@ -69,11 +69,24 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  void navigateToUserDetailsPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UserDetailsPage(
+          
+        ),
+      ),
+    );
+}
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        image: DecorationImage(
+        image: DecorationImage(   
             image: AssetImage('lib/images/giraffe background.png'), fit: BoxFit.cover),
       ),
       child: Scaffold(
