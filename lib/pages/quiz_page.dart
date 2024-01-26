@@ -8,7 +8,8 @@ class QuizPage extends StatefulWidget {
   final List<Question> questions;
   final String quizType;
 
-  const QuizPage({Key? key, required this.questions, required this.quizType}) : super(key: key);
+  const QuizPage({Key? key, required this.questions, required this.quizType})
+      : super(key: key);
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -16,24 +17,28 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   int currentQuestionIndex = 0;
-  
+
   void checkAnswer(int selectedOptionIndex) {
     double weight = widget.questions[currentQuestionIndex].weight;
-    bool isCorrect = (selectedOptionIndex == widget.questions[currentQuestionIndex].correctAnswerIndex);
+    bool isCorrect = (selectedOptionIndex ==
+        widget.questions[currentQuestionIndex].correctAnswerIndex);
 
     setState(() {
       if (widget.quizType == 'counting') {
-        if(userAnswers['counting']?.length == 5){
+        if (userAnswers['counting']?.length == 5) {
           userAnswers['counting'] = [];
         }
         userAnswers['counting']?.add(isCorrect ? 1.0 : 0.0);
-        
       } else if (widget.quizType == 'coloring') {
-        if(userAnswers['coloring']?.length == 5){
+        if (userAnswers['coloring']?.length == 5) {
           userAnswers['coloring'] = [];
         }
         userAnswers['coloring']?.add(isCorrect ? 1.0 : 0.0);
-        
+      } else if (widget.quizType == 'calculation') {
+        if (userAnswers['calculation']?.length == 5) {
+          userAnswers['calculation'] = [];
+        }
+        userAnswers['calculation']?.add(isCorrect ? 1.0 : 0.0);
       }
 
       if (currentQuestionIndex < widget.questions.length - 1) {
@@ -43,7 +48,8 @@ class _QuizPageState extends State<QuizPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => QuizResultPage(userAnswers: userAnswers,quizType: widget.quizType),
+            builder: (context) => QuizResultPage(
+                userAnswers: userAnswers, quizType: widget.quizType),
           ),
         );
       }
@@ -76,7 +82,8 @@ class _QuizPageState extends State<QuizPage> {
                   padding: EdgeInsets.symmetric(vertical: 8.0),
                   child: ElevatedButton(
                     onPressed: () => checkAnswer(index),
-                    child: Text(widget.questions[currentQuestionIndex].options[index]),
+                    child: Text(
+                        widget.questions[currentQuestionIndex].options[index]),
                   ),
                 ),
               ),
