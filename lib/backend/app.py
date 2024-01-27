@@ -51,6 +51,7 @@ class Quiz1(db.Model):
     question5_id = db.Column(db.Integer, db.ForeignKey('questions.id'), nullable=False)
     average_result = db.Column(db.Integer,nullable=False)
 
+#hello
 
 class Questions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
