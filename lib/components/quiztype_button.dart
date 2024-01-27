@@ -4,14 +4,12 @@ import 'package:projectssrk/data/quiz_data.dart';
 import 'package:projectssrk/models/question.dart';
 
 class QuizTypeButton extends StatelessWidget {
-  final String button_text;
   final List<Question> questions; // New parameter to hold the questions
   final String quizType;
   final String backgroundImage;
 
   const QuizTypeButton({
     Key? key,
-    required this.button_text,
     required this.questions, // Updated constructor to take questions
     required this.quizType,
     required this.backgroundImage,
@@ -20,7 +18,7 @@ class QuizTypeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.5, horizontal: 20),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.zero,
@@ -40,17 +38,16 @@ class QuizTypeButton extends StatelessWidget {
           );
         },
         child: Container(
+          width:
+              double.infinity, // Make sure the Container takes the full width
+          height: 120, // Set the height as needed
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(backgroundImage),
               fit: BoxFit.cover,
             ),
-          ),
-          child: Center(
-            child: Text(
-              button_text,
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
+            borderRadius:
+                BorderRadius.circular(20), // Match the button's border radius
           ),
         ),
       ),
