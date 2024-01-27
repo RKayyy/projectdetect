@@ -55,18 +55,8 @@ class Quiz1(db.Model):
 class Questions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quiz_id = db.Column(db.Integer,nullable=False)
-    question_number = db.Column(db.Integer, nullable=False)
+    question_id = db.Column(db.Integer, nullable=False)
     options = db.Column(db.String(255), nullable=False)  # Assuming options are stored as a single string
-
-# class Questions_count(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     question_number = db.Column(db.Integer, nullable=False)
-#     options = db.Column(db.String(255), nullable=False)  # Assuming options are stored as a single string
-
-# class Questions_calculate(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     question_number = db.Column(db.Integer, nullable=False)
-#     options = db.Column(db.String(255), nullable=False)  # Assuming options are stored as a single string
 
 def apply_fuzzy_logic_system(counting_input, color_input, simulator):
     # Use the mean of input lists for counting and coloring abilities
