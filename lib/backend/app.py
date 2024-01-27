@@ -26,16 +26,17 @@ class registration(db.Model):
         return f"Registration('{self.username}', '{self.email}')"
 
 class UserProfile(db.Model):
-    firebase_uid = db.Column(db.Integer, db.ForeignKey('registration.firebase_uid'), primary_key=True)
+    firebase_uid = db.Column(db.String(100), db.ForeignKey('registration.firebase_uid'), primary_key=True)
     child_name = db.Column(db.String(100), nullable=False)
     child_age = db.Column(db.Integer, nullable=False)
     parent_name = db.Column(db.String(100), nullable=False)
-    parent_phone_number = db.Column(db.String(15), nullable=False)
+    parent_phone_number = db.Column(db.Integer, nullable=False)
     address = db.Column(db.String(255), nullable=False)
 
     def __repr__(self):
         return f"UserProfile('{self.child_name}', '{self.parent_name}', '{self.parent_email}')"
-    
+
+
 class Quiz1(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     
@@ -50,22 +51,13 @@ class Quiz1(db.Model):
     question5_id = db.Column(db.Integer, db.ForeignKey('questions.id'), nullable=False)
     average_result = db.Column(db.Integer,nullable=False)
 
+#hello
 
 class Questions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quiz_id = db.Column(db.Integer,nullable=False)
-    question_number = db.Column(db.Integer, nullable=False)
+    question_id = db.Column(db.Integer, nullable=False)
     options = db.Column(db.String(255), nullable=False)  # Assuming options are stored as a single string
-
-# class Questions_count(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     question_number = db.Column(db.Integer, nullable=False)
-#     options = db.Column(db.String(255), nullable=False)  # Assuming options are stored as a single string
-
-# class Questions_calculate(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     question_number = db.Column(db.Integer, nullable=False)
-#     options = db.Column(db.String(255), nullable=False)  # Assuming options are stored as a single string
 
 def apply_fuzzy_logic_system(counting_input, color_input, simulator):
     # Use the mean of input lists for counting and coloring abilities
@@ -108,40 +100,40 @@ def predict():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-def user_profiles():
-    try:
-        # Query all user profiles from the database
-        profiles = UserProfile.query.all()
+# def user_profiles():
+#     try:
+#         # Query all user profiles from the database
+#         profiles = UserProfile.query.all()
 
-        # Convert the profiles to a list of dictionaries
-        profiles_data = [
-            {
-                'firebase_uid': profile.firebase_uid,
-                'child_name': profile.child_name,
-                'child_age': profile.child_age,
-                'parent_name': profile.parent_name,
-                'parent_phone_number': profile.parent_phone_number,
-                'address': profile.address,
-            }
-            for profile in profiles
-        ]
+#         # Convert the profiles to a list of dictionaries
+#         profiles_data = [
+#             {
+#                 'firebase_uid': profile.firebase_uid,
+#                 'child_name': profile.child_name,
+#                 'child_age': profile.child_age,
+#                 'parent_name': profile.parent_name,
+#                 'parent_phone_number': profile.parent_phone_number,
+#                 'address': profile.address,
+#             }
+#             for profile in profiles
+#         ]
 
-        print(profiles_data)
+#         print(profiles_data)
 
-        # Return a JSON response containing the profiles
-        return jsonify({'profiles': profiles_data})
+#         # Return a JSON response containing the profiles
+#         return jsonify({'profiles': profiles_data})
 
-    except Exception as e:
-        return jsonify({'error': str(e)})
+#     except Exception as e:
+#         return jsonify({'error': str(e)})
     
 
 @app.route('/save_user_details', methods=['POST'])
 def save_user_details():
     try:
         data = request.get_json()
-
+        print(data)
         user_profile_data = {
-            'firebase_uid': data['firebase_uid'],
+            'firebase_uid': data['uid'],
             'child_name': data['child_name'],
             'child_age': data['child_age'],
             'parent_name': data['parent_name'],
@@ -161,7 +153,7 @@ def save_user_details():
             existing_profile.address = user_profile_data['address']
         else:
             # Create a new user profile
-            user_profile = UserProfile(**user_profile_data)
+            user_profile = UserProfile(firebase_uid = user_profile_data['firebase_uid'],child_name = user_profile_data['child_name'],child_age = user_profile_data['child_age'],parent_name = user_profile_data['parent_name'],parent_phone_number=user_profile_data['parent_phone_number'],address = user_profile_data['address'])
             db.session.add(user_profile)
 
         db.session.commit()
@@ -196,6 +188,7 @@ def register_user():
     
 if __name__ == '__main__':
     with app.app_context():
+        db.drop_all()  
         db.create_all()
 
     app.run(debug=True,port=5566) # here i changed the port because it was showing 5000 is already in use
