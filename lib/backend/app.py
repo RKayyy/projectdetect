@@ -93,12 +93,12 @@ def predict():
         color_input = data['color_input']
 
         # Assuming you also receive user profile information in the request
-        user_profile_data = data['user_profile']
+        # user_profile_data = data['user_profile']
 
-        # Save the user profile data to the database
-        user_profile = UserProfile(**user_profile_data)
-        db.session.add(user_profile)
-        db.session.commit()
+        # # Save the user profile data to the database
+        # user_profile = UserProfile(**user_profile_data)
+        # db.session.add(user_profile)
+        # db.session.commit()
 
         # Apply the trained fuzzy logic system on the new input
         prediction = apply_fuzzy_logic_system(counting_input, color_input, loaded_fuzzy_simulator)
@@ -171,19 +171,19 @@ def save_user_details():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-@app.route('/register', methods=['POST'])
-def register():
+@app.route('/register_user', methods=['POST'])
+def register_user():
     try:
         data = request.get_json()
 
         registration_data = {
             'username': data['username'],
             'email': data['email'],
-            'password_hash': data['password_hash'],
-            'firebase_uid' : data['firebase_uid']
+            'password': data['password'],
+            'firebase_uid' : data['uid']
 
         }
-        new_registration = Registration(firebase_uid=firebase_uid, username=username, email=email, password=password)
+        new_registration = registration(firebase_uid=registration_data['firebase_uid'], username=registration_data['username'], email=registration_data['email'], password=registration_data['password'])
         
         db.session.add(new_registration)
         db.session.commit()
