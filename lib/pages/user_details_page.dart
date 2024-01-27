@@ -14,8 +14,10 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController parentsNameController = TextEditingController();
+  final TextEditingController parentsPhoneNumber = TextEditingController();
   final TextEditingController addressController = TextEditingController();
 
+  Future<void> save_user_details()
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +52,12 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
             MyTextField(
               controller: parentsNameController,
               hintText: "Parents' Name",
+              obscureText: false,
+            ),
+            const SizedBox(height: 20),
+            MyTextField(
+              controller: parentsPhoneNumber,
+              hintText: "Parents' Phone Number",
               obscureText: false,
             ),
             const SizedBox(height: 20),
