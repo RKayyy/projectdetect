@@ -22,7 +22,7 @@ class _QuizResultPageState extends State<QuizResultPage> {
   Future<void> sendQuizResults(Map<String, List<double>> userAnswers) async {
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:5000/predict'), // Replace with your Flask backend URL
+        Uri.parse('http://127.0.0.1:5566/predict'), // Replace with your Flask backend URL
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
