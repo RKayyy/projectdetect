@@ -171,8 +171,8 @@ def save_user_details():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-@app.route('/register', methods=['POST'])
-def register():
+@app.route('/register_user', methods=['POST'])
+def register_user():
     try:
         data = request.get_json()
 
@@ -180,7 +180,7 @@ def register():
             'username': data['username'],
             'email': data['email'],
             'password': data['password'],
-            'firebase_uid' : data['firebase_uid']
+            'firebase_uid' : data['uid']
 
         }
         new_registration = registration(firebase_uid=registration_data['firebase_uid'], username=registration_data['username'], email=registration_data['email'], password=registration_data['password'])
