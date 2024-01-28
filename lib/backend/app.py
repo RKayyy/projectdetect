@@ -219,6 +219,30 @@ def quiz_update():
         return jsonify({'error': str(e)})
     
 
+# Add a new route to fetch user details
+@app.route('/get_user_details/<string:firebase_uid>', methods=['GET'])
+def get_user_details(firebase_uid):
+    try:
+        print('hello1')
+        user_profile = UserProfile.query.filter_by(firebase_uid=firebase_uid).first()
+        print('hello2')
+        if user_profile:
+            # Return user details as JSON
+            return jsonify({
+                'child_name': user_profile.child_name,
+                'child_age': user_profile.child_age,
+                'parent_name': user_profile.parent_name,
+                'parent_phone_number': user_profile.parent_phone_number,
+                'address': user_profile.address,
+            })
+        else:
+            return jsonify({'error': 'User profile not found'})
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+    
+
 # Update the result_history route in app.py
 @app.route('/result_history/<string:firebase_uid>', methods=['GET'])
 def result_history(firebase_uid):

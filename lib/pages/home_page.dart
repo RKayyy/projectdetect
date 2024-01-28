@@ -6,6 +6,7 @@ import 'package:projectssrk/data/quiz_data.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:projectssrk/pages/result_history_page.dart';
+import 'package:projectssrk/pages/profile_page.dart'; // Import the ProfilePage
 
 class HomePage extends StatelessWidget {
   dynamic listfromresult;
@@ -41,19 +42,31 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Row(
+          children: [
+            Text(
+              "Welcome to our quizzes!",
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
         actions: [
-          Row(
-            children: [
-              Text(
-                "Welcome to our quizzes!",
-                style: TextStyle(fontSize: 20),
-              ),
-              IconButton(
-                onPressed: signUserOut,
-                icon: Icon(Icons.logout),
-              ),
-            ],
-          )
+          IconButton(
+            onPressed: () {
+              // Navigate to the profile page with UID
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfilePage(),
+                ),
+              );
+            },
+            icon: Icon(Icons.person),
+          ),
+          IconButton(
+            onPressed: signUserOut,
+            icon: Icon(Icons.logout),
+          ),
         ],
       ),
       body: Center(
