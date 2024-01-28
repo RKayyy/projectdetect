@@ -217,6 +217,60 @@ def quiz_update():
 
     except Exception as e:
         return jsonify({'error': str(e)})
+    
+
+# Add a new route to fetch user details
+@app.route('/get_user_details/<string:firebase_uid>', methods=['GET'])
+def get_user_details(firebase_uid):
+    try:
+        print('hello1')
+        user_profile = UserProfile.query.filter_by(firebase_uid=firebase_uid).first()
+        print('hello2')
+        if user_profile:
+            # Return user details as JSON
+            return jsonify({
+                'child_name': user_profile.child_name,
+                'child_age': user_profile.child_age,
+                'parent_name': user_profile.parent_name,
+                'parent_phone_number': user_profile.parent_phone_number,
+                'address': user_profile.address,
+            })
+        else:
+            return jsonify({'error': 'User profile not found'})
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+    
+
+# Update the result_history route in app.py
+@app.route('/result_history/<string:firebase_uid>', methods=['GET'])
+def result_history(firebase_uid):
+    try:
+        results = Quiz1.query.filter_by(firebase_uid=firebase_uid).all()
+        result_data = []
+
+        for result in results:
+            result_data.append({
+                'quiz_id': result.quiz_id,
+                'question1_id': result.question1_id,
+                'question2_id': result.question2_id,
+                'question3_id': result.question3_id,
+                'question4_id': result.question4_id,
+                'question5_id': result.question5_id,
+                'average_result': result.average_result,
+            })
+
+        return jsonify({'results': result_data})
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 
 if __name__ == '__main__':
     with app.app_context():
