@@ -185,10 +185,42 @@ def register_user():
     except Exception as e:
         return jsonify({'error': str(e)})
     
-    
+@app.route('/quiz_update', methods=['POST'])
+def quiz_update():
+    try:
+        data = request.get_json()
+
+        questionids = data.get('questionids', [])
+        quizid = data.get('quizid')
+        avg_result = data.get('avg_result')
+
+        # Extract Firebase UID from the request data
+        firebase_uid = data.get('uid')
+
+        # Create a new instance of Quiz1 model
+        new_quiz_update = Quiz1(
+            firebase_uid=firebase_uid,
+            quiz_id=quizid,
+            question1_id=questionids[0],
+            question2_id=questionids[1],
+            question3_id=questionids[2],
+            question4_id=questionids[3],
+            question5_id=questionids[4],
+            average_result=avg_result
+        )
+
+        # Add the new instance to the session and commit changes
+        db.session.add(new_quiz_update)
+        db.session.commit()
+
+        return jsonify({'message': 'Quiz update successful'})
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 if __name__ == '__main__':
     with app.app_context():
-        db.drop_all()  
+        # db.drop_all()  
         db.create_all()
 
     app.run(debug=True,port=5566) # here i changed the port because it was showing 5000 is already in use

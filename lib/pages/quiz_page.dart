@@ -18,11 +18,15 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   int currentQuestionIndex = 0;
   late List<Question> shuffledQuestions;
+  List<int> shuffledQuestionIds = [];
 
   @override
   void initState() {
     super.initState();
     shuffledQuestions = List.from(widget.questions)..shuffle();
+    shuffledQuestionIds =
+        shuffledQuestions.map((question) => question.questionid).toList();
+    print(shuffledQuestionIds);
   }
 
   void checkAnswer(int selectedOptionIndex) {
@@ -51,7 +55,7 @@ class _QuizPageState extends State<QuizPage> {
           context,
           MaterialPageRoute(
             builder: (context) => QuizResultPage(
-                userAnswers: userAnswers, quizType: widget.quizType),
+                userAnswers: userAnswers, quizType: widget.quizType, questionids: shuffledQuestionIds,),
           ),
         );
       }
