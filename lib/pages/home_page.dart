@@ -5,6 +5,7 @@ import 'quiz_page.dart';
 import 'package:projectssrk/data/quiz_data.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:projectssrk/pages/result_history_page.dart';
 
 class HomePage extends StatelessWidget {
   dynamic listfromresult;
@@ -19,6 +20,21 @@ class HomePage extends StatelessWidget {
   // Sign user out method
   void signUserOut() {
     FirebaseAuth.instance.signOut();
+  }
+
+  Future<void> getUserID(BuildContext context) async {
+    // Retrieve the currently signed-in user
+    User? user = FirebaseAuth.instance.currentUser;
+    String uid = user?.uid ?? ""; // Fetch the UID
+    print("User UID: $uid");
+
+    // Pass the UID to the ResultHistoryPage
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResultHistoryPage(uid: uid),
+      ),
+    );
   }
 
   @override
@@ -180,6 +196,12 @@ class HomePage extends StatelessWidget {
               button_text: 'Quiz on counting',
               questions: questions_count,
               quizType: 'counting',
+            ),
+            TextButton(
+              onPressed: () async {
+                await getUserID(context);
+              },
+              child: Text('Show Result History'),
             ),
           ],
         ),

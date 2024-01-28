@@ -217,6 +217,36 @@ def quiz_update():
 
     except Exception as e:
         return jsonify({'error': str(e)})
+    
+
+# Update the result_history route in app.py
+@app.route('/result_history/<string:firebase_uid>', methods=['GET'])
+def result_history(firebase_uid):
+    try:
+        results = Quiz1.query.filter_by(firebase_uid=firebase_uid).all()
+        result_data = []
+
+        for result in results:
+            result_data.append({
+                'quiz_id': result.quiz_id,
+                'question1_id': result.question1_id,
+                'question2_id': result.question2_id,
+                'question3_id': result.question3_id,
+                'question4_id': result.question4_id,
+                'question5_id': result.question5_id,
+                'average_result': result.average_result,
+            })
+
+        return jsonify({'results': result_data})
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 
 if __name__ == '__main__':
     with app.app_context():
