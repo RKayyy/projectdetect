@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:projectssrk/models/answers.dart';
 import 'dart:convert';
 import 'package:projectssrk/pages/home_page.dart'; // For JSON encoding
 import 'package:http/http.dart' as http;
@@ -33,6 +34,7 @@ class _QuizResultPageState extends State<QuizResultPage> {
 
     await quiz_update(uid);
   }
+
   Future<void> quiz_update(String uid) async {
     try {
       List<int> questionids = widget.questionids;
@@ -76,7 +78,17 @@ class _QuizResultPageState extends State<QuizResultPage> {
     }
   }
 
-  Future<void> sendQuizResults(Map<String, List<double>> userAnswers) async {
+  Future<void> getUserID1(Map<String, List<double>> userAnswers) async {
+    // Retrieve the currently signed-in user
+    User? user = FirebaseAuth.instance.currentUser;
+    String uid = user?.uid ?? ""; // Fetch the UID
+    print("User UID: $uid");
+
+    await sendQuizResults(userAnswers, uid);
+  }
+
+  Future<void> sendQuizResults(
+      Map<String, List<double>> userAnswers, String uid) async {
     try {
       final response = await http.post(
         Uri.parse(
@@ -87,6 +99,7 @@ class _QuizResultPageState extends State<QuizResultPage> {
         body: jsonEncode({
           'counting_input': userAnswers['counting'],
           'color_input': userAnswers['coloring'],
+          'uid': uid,
         }),
       );
 
@@ -149,7 +162,7 @@ class _QuizResultPageState extends State<QuizResultPage> {
                           widget.userAnswers['coloring'] != null &&
                           widget.userAnswers['counting']!.isNotEmpty &&
                           widget.userAnswers['coloring']!.isNotEmpty) {
-                        await sendQuizResults(widget.userAnswers);
+                        await getUserID1(widget.userAnswers);
                         await getUserID();
 
                         // ignore: use_build_context_synchronously
