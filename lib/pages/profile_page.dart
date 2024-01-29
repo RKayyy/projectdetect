@@ -12,21 +12,24 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   late Map<String, dynamic> _userDetails;
+  late String _uid; // Add this line to store the user ID
 
   @override
   void initState() {
     super.initState();
     _userDetails = {}; // Initialize with empty details
+    _uid = ""; // Initialize user ID
     fetchUserDetails();
   }
 
   Future<void> fetchUserDetails() async {
     try {
       // Fetch the UID using the getUserID method
-      String uid = await getUserID();
+      _uid = await getUserID(); // Store user ID
+      print("User UID: $_uid");
 
       // Use the retrieved UID to get user details
-      final response = await http.get(Uri.parse('http://127.0.0.1:5566/get_user_details/$uid'));
+      final response = await http.get(Uri.parse('http://127.0.0.1:5566/get_user_details/$_uid'));
       print(response.statusCode);
 
       if (response.statusCode == 200) {
@@ -53,7 +56,6 @@ class _ProfilePageState extends State<ProfilePage> {
     // Retrieve the currently signed-in user
     User? user = FirebaseAuth.instance.currentUser;
     String uid = user?.uid ?? ""; // Fetch the UID
-    print("User UID: $uid");
     return uid;
   }
 
@@ -72,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Column(
               children: [
                 Text(
-                  'User ID: ${_userDetails['user_id'] ?? 'N/A'}',
+                  'User ID: $_uid',
                   style: TextStyle(fontSize: 18),
                 ),
                 Text(
