@@ -5,6 +5,8 @@ import 'quiz_page.dart';
 import 'package:projectssrk/data/quiz_data.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:projectssrk/pages/result_history_page.dart';
+import 'package:projectssrk/pages/profile_page.dart'; // Import the ProfilePage
 
 class HomePage extends StatelessWidget {
   dynamic listfromresult;
@@ -21,23 +23,50 @@ class HomePage extends StatelessWidget {
     FirebaseAuth.instance.signOut();
   }
 
+  Future<void> getUserID(BuildContext context) async {
+    // Retrieve the currently signed-in user
+    User? user = FirebaseAuth.instance.currentUser;
+    String uid = user?.uid ?? ""; // Fetch the UID
+    print("User UID: $uid");
+
+    // Pass the UID to the ResultHistoryPage
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResultHistoryPage(uid: uid),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Row(
+          children: [
+            Text(
+              "Welcome to our quizzes!",
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
         actions: [
-          Row(
-            children: [
-              Text(
-                "Welcome to our quizzes!",
-                style: TextStyle(fontSize: 20),
-              ),
-              IconButton(
-                onPressed: signUserOut,
-                icon: Icon(Icons.logout),
-              ),
-            ],
-          )
+          IconButton(
+            onPressed: () {
+              // Navigate to the profile page with UID
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfilePage(),
+                ),
+              );
+            },
+            icon: Icon(Icons.person),
+          ),
+          IconButton(
+            onPressed: signUserOut,
+            icon: Icon(Icons.logout),
+          ),
         ],
       ),
       body: Center(
@@ -180,6 +209,12 @@ class HomePage extends StatelessWidget {
               button_text: 'Quiz on counting',
               questions: questions_count,
               quizType: 'counting',
+            ),
+            TextButton(
+              onPressed: () async {
+                await getUserID(context);
+              },
+              child: Text('Show Result History'),
             ),
           ],
         ),
