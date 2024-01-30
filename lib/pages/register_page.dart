@@ -163,102 +163,106 @@ class _RegisterPageState extends State<RegisterPage> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('lib/images/giraffe background.png'),
-            fit: BoxFit.cover),
+          image: AssetImage('lib/images/nb.png'),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
+        backgroundColor: Colors.transparent,
+        body: SingleChildScrollView(
             child: SafeArea(
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 110,
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 110,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                    child: Text(
+                      'Welcome\nBack',
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 23, 0, 0),
+                          fontSize: 33),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                      child: Text(
-                        'Welcome',
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 33),
+                  ),
+                  const SizedBox(height: 220),
+                  //email/ textfield
+                  MyTextField(
+                    controller: emailController,
+                    hintText: 'Email',
+                    obscureText: false,
+                  ),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  //password textfield
+                  MyTextField(
+                    controller: passwordController,
+                    hintText: 'Password',
+                    obscureText: true,
+                  ),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  //confirm password
+                  MyTextField(
+                    controller: confirmPasswordController,
+                    hintText: 'Confirm Password',
+                    obscureText: true,
+                  ),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  const SizedBox(height: 25),
+
+                  //sign in button
+                  MyButton(
+                    text: "sign Up",
+                    onTap: signUserUp,
+                  ),
+
+                  const SizedBox(height: 50),
+
+                  //or continue with
+
+                  //not a member? register here
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Already have an account?",
+                        style: TextStyle(color: Colors.grey[700]),
                       ),
-                    ),
-                    const SizedBox(height: 220),
-                    //email/ textfield
-                    MyTextField(
-                      controller: emailController,
-                      hintText: 'Email',
-                      obscureText: false,
-                    ),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    //password textfield
-                    MyTextField(
-                      controller: passwordController,
-                      hintText: 'Password',
-                      obscureText: true,
-                    ),
-
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    //confirm password
-                    MyTextField(
-                      controller: confirmPasswordController,
-                      hintText: 'Confirm Password',
-                      obscureText: true,
-                    ),
-
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    //sign in button
-                    MyButton(
-                      text: "sign Up",
-                      onTap: signUserUp,
-                    ),
-
-                    const SizedBox(height: 50),
-
-                    //or continue with
-
-                    //not a member? register here
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Already have an account?",
-                          style: TextStyle(color: Colors.grey[700]),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      GestureDetector(
+                        onTap: widget.onTap,
+                        child: const Text(
+                          "Login now",
+                          style: TextStyle(
+                              color: Colors.blue, fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        GestureDetector(
-                          onTap: widget.onTap,
-                          child: const Text(
-                            "Login now",
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
+                      )
+                    ],
+                  )
+                ],
               ),
             ),
-          )),
+          ),
+        )),
+      ),
     );
   }
 }

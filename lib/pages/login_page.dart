@@ -65,34 +65,34 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
 Widget build(BuildContext context) {
-  return Container(
-    decoration: BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage('lib/images/giraffe background.png'),
-        fit: BoxFit.cover,
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('lib/images/nb.png'),
+          fit: BoxFit.cover,
+        ),
       ),
-    ),
-    child: Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 110,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                    child: Text(
-                      'Welcome\nBack',
-                      style: TextStyle(color: const Color.fromARGB(255, 23, 0, 0), fontSize: 33),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 110,
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                      child: Text(
+                        'Welcome\nBack',
+                        style: TextStyle(color: const Color.fromARGB(255, 23, 0, 0), fontSize: 33),
+                      ),
+                    ),
                   const SizedBox(height: 220),
 
                   //username textfield
