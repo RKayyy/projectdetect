@@ -34,13 +34,13 @@ class UserProfile(db.Model):
     address = db.Column(db.String(255), nullable=False)
 
     def __repr__(self):
-        return f"UserProfile('{self.child_name}', '{self.parent_name}', '{self.parent_email}')"
+        return f"UserProfile('{self.child_name}', '{self.parent_name}', '{self.parent_phone_number}')"
 
 
 class Quiz1(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     
-    firebase_uid = db.Column(db.Integer, db.ForeignKey('registration.firebase_uid'), nullable=False)
+    firebase_uid = db.Column(db.String(100), db.ForeignKey('registration.firebase_uid'), nullable=False)
     quiz_id = db.Column(db.Integer,nullable=False)
 
 
@@ -58,6 +58,12 @@ class Questions(db.Model):
     quiz_id = db.Column(db.Integer,nullable=False)
     question_id = db.Column(db.Integer, nullable=False)
     options = db.Column(db.String(255), nullable=False)  # Assuming options are stored as a single string
+
+class predicted_values(db.Model):
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    firebase_uid = db.Column(db.String(100), db.ForeignKey('registration.firebase_uid'), nullable=False)
+    predicted_values = db.Column(db.Float,nullable=False)
+
 
 def apply_fuzzy_logic_system(counting_input, color_input, simulator):
     # Use the mean of input lists for counting and coloring abilities
@@ -83,49 +89,20 @@ def predict():
 
         counting_input = data['counting_input']
         color_input = data['color_input']
+        firebase_uid = data['uid']  # Fetching Firebase user ID from the request
 
-        # Assuming you also receive user profile information in the request
-        # user_profile_data = data['user_profile']
-
-        # # Save the user profile data to the database
-        # user_profile = UserProfile(**user_profile_data)
-        # db.session.add(user_profile)
-        # db.session.commit()
-
-        # Apply the trained fuzzy logic system on the new input
+        # Predict using the fuzzy logic system
         prediction = apply_fuzzy_logic_system(counting_input, color_input, loaded_fuzzy_simulator)
+
+        # Save the predicted value to the database
+        new_predicted_value = predicted_values(firebase_uid=firebase_uid, predicted_values=prediction)
+        db.session.add(new_predicted_value)
+        db.session.commit()
 
         return jsonify({'prediction': prediction})
 
     except Exception as e:
         return jsonify({'error': str(e)})
-
-# def user_profiles():
-#     try:
-#         # Query all user profiles from the database
-#         profiles = UserProfile.query.all()
-
-#         # Convert the profiles to a list of dictionaries
-#         profiles_data = [
-#             {
-#                 'firebase_uid': profile.firebase_uid,
-#                 'child_name': profile.child_name,
-#                 'child_age': profile.child_age,
-#                 'parent_name': profile.parent_name,
-#                 'parent_phone_number': profile.parent_phone_number,
-#                 'address': profile.address,
-#             }
-#             for profile in profiles
-#         ]
-
-#         print(profiles_data)
-
-#         # Return a JSON response containing the profiles
-#         return jsonify({'profiles': profiles_data})
-
-#     except Exception as e:
-#         return jsonify({'error': str(e)})
-    
 
 @app.route('/save_user_details', methods=['POST'])
 def save_user_details():
@@ -265,12 +242,6 @@ def result_history(firebase_uid):
 
     except Exception as e:
         return jsonify({'error': str(e)})
-
-
-
-    except Exception as e:
-        return jsonify({'error': str(e)})
-
 
 if __name__ == '__main__':
     with app.app_context():
