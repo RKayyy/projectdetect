@@ -4,26 +4,28 @@ import 'package:projectssrk/data/quiz_data.dart';
 import 'package:projectssrk/models/question.dart';
 
 class QuizTypeButton extends StatelessWidget {
+  final String button_text;
+  final Color button_color;
   final List<Question> questions; // New parameter to hold the questions
   final String quizType;
-  final String backgroundImage;
 
   const QuizTypeButton({
     Key? key,
+    required this.button_color,
+    required this.button_text,
     required this.questions, // Updated constructor to take questions
     required this.quizType,
-    required this.backgroundImage,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.5, horizontal: 20),
+      padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.zero,
-          minimumSize:
-              Size(double.infinity, 120), // Set minimum size to take full width
+          minimumSize: Size(double.infinity, 120), // Set minimum size to take full width
+          backgroundColor: button_color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -32,23 +34,13 @@ class QuizTypeButton extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  QuizPage(questions: questions, quizType: quizType),
+              builder: (context) => QuizPage(questions: questions, quizType: quizType),
             ),
           );
         },
-        child: Container(
-          width:
-              double.infinity, // Make sure the Container takes the full width
-          height: 120, // Set the height as needed
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(backgroundImage),
-              fit: BoxFit.cover,
-            ),
-            borderRadius:
-                BorderRadius.circular(20), // Match the button's border radius
-          ),
+        child: Text(
+          button_text,
+          style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
     );

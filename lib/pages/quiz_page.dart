@@ -17,7 +17,6 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   int currentQuestionIndex = 0;
-
   late List<Question> shuffledQuestions;
   List<int> shuffledQuestionIds = [];
 
@@ -30,12 +29,10 @@ class _QuizPageState extends State<QuizPage> {
     print(shuffledQuestionIds);
   }
 
-
   void checkAnswer(int selectedOptionIndex) {
     double weight = widget.questions[currentQuestionIndex].weight;
     bool isCorrect = (selectedOptionIndex ==
         shuffledQuestions[currentQuestionIndex].correctAnswerIndex);
-
 
     setState(() {
       if (widget.quizType == 'counting') {
@@ -48,13 +45,6 @@ class _QuizPageState extends State<QuizPage> {
           userAnswers['coloring'] = [];
         }
         userAnswers['coloring']?.add(isCorrect ? 1.0 : 0.0);
-
-      } else if (widget.quizType == 'calculation') {
-        if (userAnswers['calculation']?.length == 5) {
-          userAnswers['calculation'] = [];
-        }
-        userAnswers['calculation']?.add(isCorrect ? 1.0 : 0.0);
-
       }
 
       if (currentQuestionIndex < shuffledQuestions.length - 1) {
@@ -66,7 +56,6 @@ class _QuizPageState extends State<QuizPage> {
           MaterialPageRoute(
             builder: (context) => QuizResultPage(
                 userAnswers: userAnswers, quizType: widget.quizType, questionids: shuffledQuestionIds,),
-
           ),
         );
       }
@@ -100,10 +89,7 @@ class _QuizPageState extends State<QuizPage> {
                   child: ElevatedButton(
                     onPressed: () => checkAnswer(index),
                     child: Text(
-
-
                         shuffledQuestions[currentQuestionIndex].options[index]),
-
                   ),
                 ),
               ),

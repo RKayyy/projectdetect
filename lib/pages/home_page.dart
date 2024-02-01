@@ -42,7 +42,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         title: Row(
           children: [
             Text(
@@ -86,14 +85,10 @@ class HomePage extends StatelessWidget {
                     listfromresult['counting']!.isNotEmpty)
                   Stack(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
+                      ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
-                          color: Color(
-                              0xFFFFCFE0), // Set your desired background color
-                        ),
-                        // You can customize the content inside the Container as needed
-                      ),
+                          child:
+                              Image.asset("lib/images/giraffe_carousel.png")),
                       Positioned(
                         right: 15,
                         top: 15,
@@ -115,17 +110,12 @@ class HomePage extends StatelessWidget {
                   )
                 else
                   Stack(children: [
-                    Container(
-                      decoration: BoxDecoration(
+                    ClipRRect(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Color(
-                            0xFFFFCFE0), // Set your desired background color
-                      ),
-                      // You can customize the content inside the Container as needed
-                    ),
+                        child: Image.asset("lib/images/giraffe_carousel.png")),
                     Positioned(
-                        child: Center(
-                      child: Container(
+                        right: 15,
+                        top: 15,
                         child: Text(
                           "Please attempt \nthe counting quiz \nfor your results",
                           style: TextStyle(
@@ -141,23 +131,17 @@ class HomePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                    ))
+                        ))
                   ]),
                 if (listfromresult != null &&
                     listfromresult['coloring'] != null &&
                     listfromresult['coloring']!.isNotEmpty)
                   Stack(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
+                      ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
-                          color: Color(
-                              0xFFFFE27B), // Set your desired background color
-                        ),
-                        // You can customize the content inside the Container as needed
-                      ),
+                          child:
+                              Image.asset("lib/images/giraffe_carousel.png")),
                       Positioned(
                         right: 15,
                         top: 15,
@@ -179,17 +163,12 @@ class HomePage extends StatelessWidget {
                   )
                 else
                   Stack(children: [
-                    Container(
-                      decoration: BoxDecoration(
+                    ClipRRect(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Color.fromRGBO(255, 207, 224,
-                            0.8), // Set your desired background color
-                      ),
-                      // You can customize the content inside the Container as needed
-                    ),
+                        child: Image.asset("lib/images/giraffe_carousel.png")),
                     Positioned(
-                        child: Center(
-                      child: Container(
+                        right: 15,
+                        top: 15,
                         child: Text(
                           "Please attempt \nthe coloring quiz \nfor your results",
                           style: TextStyle(
@@ -205,9 +184,7 @@ class HomePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                    ))
+                        ))
                   ]),
               ],
               options: CarouselOptions(
@@ -221,32 +198,23 @@ class HomePage extends StatelessWidget {
                 viewportFraction: 0.8,
               ),
             ),
-            const SizedBox(
-              height: 50,
-            ),
             QuizTypeButton(
-              backgroundImage: 'lib/images/coloring.png',
+              button_color: Colors.pink,
+              button_text: "Quiz on Coloring",
               questions: questions_color,
               quizType: 'coloring',
             ),
             QuizTypeButton(
-              backgroundImage: 'lib/images/counting.png',
+              button_color: Colors.green,
+              button_text: 'Quiz on counting',
               questions: questions_count,
               quizType: 'counting',
             ),
-
-            QuizTypeButton(
-              backgroundImage: 'lib/images/calculation.png',
-              questions: questions_calcutation,
-              quizType: 'calculation',
-              ),
-
             TextButton(
               onPressed: () async {
                 await getUserID(context);
               },
               child: Text('Show Result History'),
-
             ),
           ],
         ),

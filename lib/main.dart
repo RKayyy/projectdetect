@@ -40,7 +40,7 @@ class _LoadingPageState extends State<LoadingPage> {
     super.initState();
 
     // Wait for 3 seconds, then navigate to AuthPage
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -60,9 +60,9 @@ class _LoadingPageState extends State<LoadingPage> {
         child: Column(
           children: [
             Lottie.network(
-              "https://lottie.host/e47be675-87f2-4473-99ce-658d31136c3e/7DB6ZFgiwF.json",
-              width: screenWidth,
-              height: screenHeight * 0.8,
+              'https://lottie.host/5f9764d3-438a-44bb-be7c-a5d3d1643028/ovIOf07wSR.json',
+              width: screenWidth ,
+              height: screenHeight*0.8,
               fit: BoxFit.contain,
             ),
             Row(
@@ -77,8 +77,7 @@ class _LoadingPageState extends State<LoadingPage> {
                     TyperAnimatedText(
                       '...',
                       speed: const Duration(milliseconds: 800),
-                      textStyle:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      textStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
