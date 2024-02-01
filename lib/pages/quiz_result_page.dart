@@ -36,23 +36,34 @@ class _QuizResultPageState extends State<QuizResultPage> {
   }
 
   Future<void> quiz_update(String uid) async {
+    int quizid;
+    int avgResult;
     try {
       List<int> questionids = widget.questionids;
-      int quizid = (widget.quizType == 'counting')
-          ? 2
-          : 1; // Assign quizid based on quizType
-      int avgResult = (widget.quizType == 'counting')
-          ? (((widget.userAnswers['counting']!
-                          .fold(0.0, (sum, score) => sum + score) /
-                      5) *
-                  100)
-              .toInt())
-          : (((widget.userAnswers['coloring']!
-                          .fold(0.0, (sum, score) => sum + score) /
-                      5) *
-                  100)
-              .toInt());
-
+      if (widget.quizType == 'counting') {
+        quizid = 2;
+        avgResult = ((widget.userAnswers['counting']!
+                        .fold(0.0, (sum, score) => sum + score) /
+                    5) *
+                100)
+            .toInt();
+      } else if (widget.quizType == 'coloring') {
+        quizid = 1;
+        avgResult = ((widget.userAnswers['coloring']!
+                        .fold(0.0, (sum, score) => sum + score) /
+                    5) *
+                100)
+            .toInt();
+      } else if (widget.quizType == 'calculate') {
+        quizid = 3; // Change it according to the 'calculate' quiz type
+        avgResult = ((widget.userAnswers['calculate']!
+                        .fold(0.0, (sum, score) => sum + score) /
+                    5) *
+                100)
+            .toInt();
+      } else {
+        throw Exception('Invalid quiz type: ${widget.quizType}');
+      }
       final response = await http.post(
         Uri.parse(
             'http://127.0.0.1:5566/quiz_update'), // Replace with your Flask backend URL
@@ -75,6 +86,19 @@ class _QuizResultPageState extends State<QuizResultPage> {
       }
     } catch (e) {
       print('Error from quiz_result_page.dart: $e');
+    }
+  }
+
+  int getQuizId(String quizType) {
+    switch (quizType) {
+      case 'counting':
+        return 2;
+      case 'coloring':
+        return 1;
+      case 'calculate':
+        return 3;
+      default:
+        throw Exception('Invalid quiz type: $quizType');
     }
   }
 
@@ -125,9 +149,22 @@ class _QuizResultPageState extends State<QuizResultPage> {
     }
   }
 
+  int calculateScore() {
+    String quizType = widget.quizType;
+    List<double> scores = widget.userAnswers[quizType]!;
+    return ((scores.fold(0.0, (sum, score) => sum + score) / 5) * 100).toInt();
+  }
+
   @override
   Widget build(BuildContext context) {
     int totalQuestions = widget.userAnswers.length;
+
+    bool allQuizzesAttempted = widget.userAnswers['counting'] != null &&
+        widget.userAnswers['counting']!.isNotEmpty &&
+        widget.userAnswers['coloring'] != null &&
+        widget.userAnswers['coloring']!.isNotEmpty &&
+        widget.userAnswers['calculate'] != null &&
+        widget.userAnswers['calculate']!.isNotEmpty;
 
     return Scaffold(
       appBar: AppBar(
@@ -143,46 +180,18 @@ class _QuizResultPageState extends State<QuizResultPage> {
             ),
             SizedBox(height: 20.0),
             Text(
-              (widget.quizType == 'counting')
-                  ? 'Your total score for counting questions is ${((widget.userAnswers['counting']!.fold(0.0, (sum, score) => sum + score) / 5) * 100).toString()} % '
-                  : 'Your total score for coloring questions is ${((widget.userAnswers['coloring']!.fold(0.0, (sum, score) => sum + score) / 5) * 100).toString()} %',
+              'Your total score for ${widget.quizType} questions is ${calculateScore()} %',
               style: TextStyle(fontSize: 16.0),
             ),
             Text(
               'Your answers are: ${widget.userAnswers}',
             ),
             SizedBox(height: 20.0),
-            (widget.userAnswers['counting'] != null &&
-                    widget.userAnswers['coloring'] != null &&
-                    widget.userAnswers['counting']!.isNotEmpty &&
-                    widget.userAnswers['coloring']!.isNotEmpty)
+            allQuizzesAttempted
                 ? ElevatedButton(
                     onPressed: () async {
-                      if (widget.userAnswers['counting'] != null &&
-                          widget.userAnswers['coloring'] != null &&
-                          widget.userAnswers['counting']!.isNotEmpty &&
-                          widget.userAnswers['coloring']!.isNotEmpty) {
-                        await getUserID1(widget.userAnswers);
-                        await getUserID();
-
-                        // ignore: use_build_context_synchronously
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HomePage(
-                              listfromresult: widget.userAnswers,
-                            ),
-                          ),
-                        ); // Go back to home page
-                      } else {
-                        // Display a message or handle the case where one or both lists are null
-                        print('Please answer all questions before submitting.');
-                      }
-                    },
-                    child: Text('Submit Quiz Results'),
-                  )
-                : ElevatedButton(
-                    onPressed: () async {
+                      await getUserID1(widget.userAnswers);
+                      await getUserID();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -190,7 +199,22 @@ class _QuizResultPageState extends State<QuizResultPage> {
                             listfromresult: widget.userAnswers,
                           ),
                         ),
-                      ); // Go back to home page
+                      ); // Go back to the home page
+                    },
+                    child: Text('Submit Quiz Results'),
+                  )
+                : ElevatedButton(
+                    onPressed: () async {
+                      await getUserID1(widget.userAnswers);
+                      await getUserID();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(
+                            listfromresult: widget.userAnswers,
+                          ),
+                        ),
+                      ); // Go back to the home page
                     },
                     child: Text('Go to Home'),
                   ),

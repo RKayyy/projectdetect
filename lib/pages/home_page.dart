@@ -186,6 +186,63 @@ class HomePage extends StatelessWidget {
                           ),
                         ))
                   ]),
+                if (listfromresult != null &&
+                    listfromresult['calculate'] != null &&
+                    listfromresult['calculate']!.isNotEmpty)
+                  Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Image.asset("lib/images/giraffe_carousel.png"),
+                      ),
+                      Positioned(
+                        right: 15,
+                        top: 15,
+                        child: CircularPercentIndicator(
+                          radius: 80.0,
+                          lineWidth: 10.0,
+                          percent: (listfromresult["calculate"]
+                                      ?.fold(0, (a, b) => a + b) ??
+                                  0) /
+                              12.5,
+                          center: Text(
+                            "${((listfromresult["calculate"]?.fold(0, (a, b) => a + b) ?? 0) / 12.5 * 100).toStringAsFixed(2)}%",
+                            style: TextStyle(fontSize: 16.0),
+                          ),
+                          progressColor: Colors.red,
+                        ),
+                      )
+                    ],
+                  )
+                else
+                  Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Image.asset("lib/images/giraffe_carousel.png"),
+                      ),
+                      Positioned(
+                        right: 15,
+                        top: 15,
+                        child: Text(
+                          "Please attempt \nthe calculating quiz \nfor your results",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.2,
+                            shadows: [
+                              Shadow(
+                                color: Colors.black.withOpacity(0.5),
+                                offset: Offset(2.0, 2.0),
+                                blurRadius: 5.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
               ],
               options: CarouselOptions(
                 height: 200.0,
@@ -209,6 +266,12 @@ class HomePage extends StatelessWidget {
               button_text: 'Quiz on counting',
               questions: questions_count,
               quizType: 'counting',
+            ),
+            QuizTypeButton(
+              button_color: Colors.blue,
+              button_text: 'Quiz on calculating',
+              questions: questions_color,
+              quizType: 'calculate',
             ),
             TextButton(
               onPressed: () async {

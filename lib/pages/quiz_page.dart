@@ -45,6 +45,11 @@ class _QuizPageState extends State<QuizPage> {
           userAnswers['coloring'] = [];
         }
         userAnswers['coloring']?.add(isCorrect ? 1.0 : 0.0);
+      } else if (widget.quizType == 'calculate') {
+        if (userAnswers['calculate']?.length == 5) {
+          userAnswers['calculate'] = [];
+        }
+        userAnswers['calculate']?.add(isCorrect ? 1.0 : 0.0);
       }
 
       if (currentQuestionIndex < shuffledQuestions.length - 1) {
@@ -55,7 +60,10 @@ class _QuizPageState extends State<QuizPage> {
           context,
           MaterialPageRoute(
             builder: (context) => QuizResultPage(
-                userAnswers: userAnswers, quizType: widget.quizType, questionids: shuffledQuestionIds,),
+              userAnswers: userAnswers,
+              quizType: widget.quizType,
+              questionids: shuffledQuestionIds,
+            ),
           ),
         );
       }
