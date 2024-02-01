@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
       decoration: BoxDecoration(
         color: Colors.white, // Set background color to white
         image: DecorationImage(
-          image: AssetImage('lib/images/login.png'),
+          image: AssetImage('lib/images/loginimg.png'),
           fit: BoxFit.cover,
         ),
       ),

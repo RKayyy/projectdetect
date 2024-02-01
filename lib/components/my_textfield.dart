@@ -14,19 +14,19 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: TextField(
-        controller: controller,
-        obscureText: obscureText, //1st : property name, second: variable name
-        decoration: InputDecoration(
-            fillColor: Colors.black54,
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        child: TextField(
+          controller: controller,
+          obscureText: obscureText, //1st : property name, second: variable name
+          decoration: InputDecoration(
+            fillColor: Color.fromARGB(150, 255, 255, 255),
             filled: true,
             hintText: hintText,
             //hintStyle: TextStyle(color: Colors.grey[500]),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-            )),
-      ),
-    );
+            ),
+          ),
+        ));
   }
 }

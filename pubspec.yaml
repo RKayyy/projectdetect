@@ -41,7 +41,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   carousel_slider: ^4.2.1
   percent_indicator: ^4.2.3
-  speech_to_text: ^6.5.1
+
 
 dev_dependencies:
   flutter_test:
