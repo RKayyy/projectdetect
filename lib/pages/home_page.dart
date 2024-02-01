@@ -5,6 +5,8 @@ import 'quiz_page.dart';
 import 'package:projectssrk/data/quiz_data.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:projectssrk/pages/result_history_page.dart';
+import 'package:projectssrk/pages/profile_page.dart'; // Import the ProfilePage
 
 class HomePage extends StatelessWidget {
   dynamic listfromresult;
@@ -21,27 +23,53 @@ class HomePage extends StatelessWidget {
     FirebaseAuth.instance.signOut();
   }
 
+  Future<void> getUserID(BuildContext context) async {
+    // Retrieve the currently signed-in user
+    User? user = FirebaseAuth.instance.currentUser;
+    String uid = user?.uid ?? ""; // Fetch the UID
+    print("User UID: $uid");
+
+    // Pass the UID to the ResultHistoryPage
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResultHistoryPage(uid: uid),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 20),
-            child: Text(
+
+        title: Row(
+          children: [
+            Text(
               "Welcome to our quizzes!",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20),
             ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // Navigate to the profile page with UID
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfilePage(),
+                ),
+              );
+            },
+            icon: Icon(Icons.person),
           ),
-          actions: [
-            IconButton(
-                onPressed: signUserOut,
-                icon: CircleAvatar(
-                    backgroundImage: AssetImage("lib/images/userprofile.png"))),
-            // You can add more widgets here, like additional icons or buttons
-          ]),
+          IconButton(
+            onPressed: signUserOut,
+            icon: Icon(Icons.logout),
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -206,10 +234,19 @@ class HomePage extends StatelessWidget {
               questions: questions_count,
               quizType: 'counting',
             ),
+
             QuizTypeButton(
               backgroundImage: 'lib/images/calculation.png',
               questions: questions_calcutation,
               quizType: 'calculation',
+              ),
+
+            TextButton(
+              onPressed: () async {
+                await getUserID(context);
+              },
+              child: Text('Show Result History'),
+
             ),
           ],
         ),
