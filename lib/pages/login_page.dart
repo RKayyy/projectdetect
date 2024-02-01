@@ -64,111 +64,114 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-Widget build(BuildContext context) {
-  return Container(
-    decoration: BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage('lib/images/giraffe background.png'),
-        fit: BoxFit.cover,
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white, // Set background color to white
+        image: DecorationImage(
+          image: AssetImage('lib/images/loginimg.png'),
+          fit: BoxFit.cover,
+        ),
       ),
-    ),
-    child: Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 110,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                    child: Text(
-                      'Welcome\nBack',
-                      style: TextStyle(color: const Color.fromARGB(255, 23, 0, 0), fontSize: 33),
+      child: Scaffold(
+        backgroundColor:
+            Colors.transparent, // Set Scaffold background color to transparent
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 110,
                     ),
-                  ),
-                  const SizedBox(height: 220),
-
-                  //username textfield
-                  MyTextField(
-                    controller: emailController,
-                    hintText: 'Email',
-                    obscureText: false,
-                  ),
-
-                  const SizedBox(
-                    height: 20,
-                  ),
-
-                  //password textfield
-                  MyTextField(
-                    controller: passwordController,
-                    hintText: 'Password',
-                    obscureText: true,
-                  ),
-
-                  const SizedBox(
-                    height: 10,
-                  ),
-
-                  //forgot password
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.grey[600]),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                      child: Text(
+                        'Welcome\nBack',
+                        style: TextStyle(
+                            color: const Color.fromARGB(255, 23, 0, 0),
+                            fontSize: 33),
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 220),
 
-                  const SizedBox(height: 25),
+                    //username textfield
+                    MyTextField(
+                      controller: emailController,
+                      hintText: 'Email',
+                      obscureText: false,
+                    ),
 
-                  //sign in button
-                  MyButton(
-                    text: "Sign In",
-                    onTap: signUserIn,
-                  ),
+                    const SizedBox(
+                      height: 20,
+                    ),
 
-                  const SizedBox(height: 50),
+                    //password textfield
+                    MyTextField(
+                      controller: passwordController,
+                      hintText: 'Password',
+                      obscureText: true,
+                    ),
 
-                  //not a member? register here
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Not a member?",
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      GestureDetector(
-                        onTap: widget.onTap,
-                        child: const Text(
-                          "Register now",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    //forgot password
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 25),
+
+                    //sign in button
+                    MyButton(
+                      text: "Sign In",
+                      onTap: signUserIn,
+                    ),
+
+                    const SizedBox(height: 50),
+
+                    //not a member? register here
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Not a member?",
+                          style: TextStyle(color: Colors.grey[700]),
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        GestureDetector(
+                          onTap: widget.onTap,
+                          child: const Text(
+                            "Register now",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 }
