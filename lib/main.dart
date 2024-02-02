@@ -60,7 +60,7 @@ class _LoadingPageState extends State<LoadingPage> {
         child: Column(
           children: [
             Lottie.network(
-              'https://lottie.host/5f9764d3-438a-44bb-be7c-a5d3d1643028/ovIOf07wSR.json',
+              'https://lottie.host/1fb21e1c-d81a-478c-9d2e-63dcdc118df9/yeaWtV725t.json',
               width: screenWidth ,
               height: screenHeight*0.8,
               fit: BoxFit.contain,
