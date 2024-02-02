@@ -1,13 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projectssrk/components/quiztype_button.dart';
+import 'package:projectssrk/pages/login_page.dart';
 import 'quiz_page.dart';
 import 'package:projectssrk/data/quiz_data.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:projectssrk/pages/result_history_page.dart';
 import 'package:projectssrk/pages/profile_page.dart'; // Import the ProfilePage
-
+import 'package:projectssrk/pages/login_page.dart';
+import 'package:projectssrk/pages/login_page.dart';
 class HomePage extends StatelessWidget {
   dynamic listfromresult;
   bool isFirstAttempt;
@@ -19,8 +21,15 @@ class HomePage extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser!;
 
   // Sign user out method
-  void signUserOut() {
+  void signUserOut(BuildContext context) {
     FirebaseAuth.instance.signOut();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginPage(),
+      ),
+    );
   }
 
   Future<void> getUserID(BuildContext context) async {
@@ -64,7 +73,9 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.person),
           ),
           IconButton(
-            onPressed: signUserOut,
+            onPressed: () {
+              signUserOut(context); // Pass the context to the method
+            },
             icon: Icon(Icons.logout),
           ),
         ],
