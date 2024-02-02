@@ -8,15 +8,15 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-class UserDetailsPage extends StatefulWidget {
+class UserDetailsPage1 extends StatefulWidget {
   final Function()? onDetailsSubmitted;
-  UserDetailsPage({super.key, this.onDetailsSubmitted});
+  UserDetailsPage1({super.key, this.onDetailsSubmitted});
 
   @override
-  State<UserDetailsPage> createState() => _UserDetailsPageState();
+  State<UserDetailsPage1> createState() => _UserDetailsPageState();
 }
 
-class _UserDetailsPageState extends State<UserDetailsPage> {
+class _UserDetailsPageState extends State<UserDetailsPage1> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController parentsNameController = TextEditingController();
