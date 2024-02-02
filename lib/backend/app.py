@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 # app.py (Flask backend)
 
 from flask import Flask, request, jsonify,render_template
+=======
+from flask import Flask, jsonify, request
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+>>>>>>> Stashed changes
 import pickle
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS 
@@ -12,6 +18,7 @@ CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
+<<<<<<< Updated upstream
 db = SQLAlchemy(app)
 
 class registration(db.Model):
@@ -20,6 +27,23 @@ class registration(db.Model):
     email = db.Column(db.String(120),nullable=False)
     password = db.Column(db.String(50),nullable=False)
 
+=======
+
+################### tables defined
+
+# Configure your database connection string
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+db = SQLAlchemy(app)
+
+# Define the User Profile model
+class Registration(db.Model):
+    uid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(255), nullable=False)
+
+    # Relationship with UserProfile
+>>>>>>> Stashed changes
     user_profile = relationship('UserProfile', backref='registration', uselist=False)
 
     def __repr__(self):
@@ -34,6 +58,7 @@ class UserProfile(db.Model):
     address = db.Column(db.String(255), nullable=False)
 
     def __repr__(self):
+<<<<<<< Updated upstream
         return f"UserProfile('{self.child_name}', '{self.parent_name}', '{self.parent_phone_number}')"
 
 
@@ -63,7 +88,18 @@ class predicted_values(db.Model):
     id = db.Column(db.Integer,primary_key=True,autoincrement=True)
     firebase_uid = db.Column(db.String(100), db.ForeignKey('registration.firebase_uid'), nullable=False)
     predicted_values = db.Column(db.Float,nullable=False)
+=======
+        return f"UserProfile('{self.child_name}', '{self.parent_name}', '{self.parent_email}')"
+    
+>>>>>>> Stashed changes
 
+
+
+
+
+
+
+############################## model based
 
 def apply_fuzzy_logic_system(counting_input, color_input, simulator):
     # Use the mean of input lists for counting and coloring abilities
@@ -104,13 +140,52 @@ def predict():
     except Exception as e:
         return jsonify({'error': str(e)})
 
+<<<<<<< Updated upstream
+=======
+
+
+
+
+########################## sql based backend
+@app.route('/user_profiles')
+def user_profiles():
+    try:
+        # Query all user profiles from the database
+        profiles = UserProfile.query.all()
+
+        # Convert the profiles to a list of dictionaries
+        profiles_data = [
+            {
+                'uid': profile.uid,
+                'child_name': profile.child_name,
+                'child_age': profile.child_age,
+                'parent_name': profile.parent_name,
+                'parent_phone_number': profile.parent_phone_number,
+                'address': profile.address,
+            }
+            for profile in profiles
+        ]
+
+        print(profiles_data)
+
+        # Return a JSON response containing the profiles
+        return jsonify({'profiles': profiles_data})
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+>>>>>>> Stashed changes
 @app.route('/save_user_details', methods=['POST'])
 def save_user_details():
     try:
         data = request.get_json()
         print(data)
         user_profile_data = {
+<<<<<<< Updated upstream
             'firebase_uid': data['uid'],
+=======
+            'uid': data['uid'],
+>>>>>>> Stashed changes
             'child_name': data['child_name'],
             'child_age': data['child_age'],
             'parent_name': data['parent_name'],
@@ -119,7 +194,11 @@ def save_user_details():
         }
 
         # Check if the user profile already exists in the database
+<<<<<<< Updated upstream
         existing_profile = UserProfile.query.filter_by(firebase_uid=user_profile_data['firebase_uid']).first()
+=======
+        existing_profile = UserProfile.query.filter_by(uid=user_profile_data['uid']).first()
+>>>>>>> Stashed changes
 
         if existing_profile:
             # Update the existing user profile
@@ -130,7 +209,11 @@ def save_user_details():
             existing_profile.address = user_profile_data['address']
         else:
             # Create a new user profile
+<<<<<<< Updated upstream
             user_profile = UserProfile(firebase_uid = user_profile_data['firebase_uid'],child_name = user_profile_data['child_name'],child_age = user_profile_data['child_age'],parent_name = user_profile_data['parent_name'],parent_phone_number=user_profile_data['parent_phone_number'],address = user_profile_data['address'])
+=======
+            user_profile = UserProfile(**user_profile_data)
+>>>>>>> Stashed changes
             db.session.add(user_profile)
 
         db.session.commit()
@@ -239,6 +322,26 @@ def result_history(firebase_uid):
             })
 
         return jsonify({'results': result_data})
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+@app.route('/register', methods=['POST'])
+def register():
+    try:
+        data = request.get_json()
+
+        registration_data = {
+            'username': data['username'],
+            'email': data['email'],
+            'password_hash': data['password_hash'],
+        }
+
+        registration = Registration(**registration_data)
+        db.session.add(registration)
+        db.session.commit()
+
+        return jsonify({'message': 'Registration successful'})
 
     except Exception as e:
         return jsonify({'error': str(e)})

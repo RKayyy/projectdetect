@@ -5,8 +5,12 @@ import 'package:projectssrk/components/my_button.dart';
 import 'package:projectssrk/components/my_textfield.dart';
 import 'package:projectssrk/components/square_tile.dart';
 import 'package:projectssrk/pages/user_details_page.dart';
+<<<<<<< Updated upstream
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+=======
+// import 'package:projectssrk/pages/user_page.dart';
+>>>>>>> Stashed changes
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -26,6 +30,7 @@ class _RegisterPageState extends State<RegisterPage> {
   //****************************************************************************************************************
 
   void signUserUp() async {
+<<<<<<< Updated upstream
     if (!mounted) return;
 
     showDialog(
@@ -46,12 +51,33 @@ class _RegisterPageState extends State<RegisterPage> {
         getUserID();
         Navigator.pop(context); // Close the loading circle
 
+=======
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+
+    try {
+      if (passwordController.text == confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        Navigator.pop(context); // Close the loading circle
+
+        // Navigate to UserDetailsPage after successful registration
+>>>>>>> Stashed changes
         navigateToUserDetailsPage();
       } else {
         Navigator.pop(context); // Close the loading circle
         showErrorMessage("Passwords don't match");
       }
     } on FirebaseAuthException catch (e) {
+<<<<<<< Updated upstream
       print(e);
       Navigator.pop(context); // Close the loading circle
       showErrorMessage(e.code);
@@ -97,6 +123,13 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+=======
+      Navigator.pop(context); // Close the loading circle
+      showErrorMessage(e.code);
+    }
+  }
+
+>>>>>>> Stashed changes
   //show error message
   void showErrorMessage(String message) {
     showDialog(
@@ -114,6 +147,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+<<<<<<< Updated upstream
   // Future<void> sendQuizResults(Map<String, List<double>> userAnswers) async {
   //   try {
   //     final response = await http.post(
@@ -157,6 +191,19 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+=======
+  
+
+  void navigateToUserDetailsPage() {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => UserDetailsPage1(),
+    ),
+  );
+}
+
+>>>>>>> Stashed changes
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +234,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     const SizedBox(height: 220),
+<<<<<<< Updated upstream
                     //email/ textfield
+=======
+                    //username textfield
+>>>>>>> Stashed changes
                     MyTextField(
                       controller: emailController,
                       hintText: 'Email',
@@ -231,6 +282,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(height: 50),
 
                     //or continue with
+<<<<<<< Updated upstream
+=======
+                    MyButton(
+                      text: "Go to User Details",
+                      onTap: navigateToUserDetailsPage,
+                    ),
+>>>>>>> Stashed changes
 
                     //not a member? register here
                     Row(
