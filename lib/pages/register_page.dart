@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:projectssrk/components/my_button.dart';
 import 'package:projectssrk/components/my_textfield.dart';
 import 'package:projectssrk/components/square_tile.dart';
+import 'package:projectssrk/pages/login_page.dart';
 import 'package:projectssrk/pages/user_details_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:projectssrk/pages/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  RegisterPage({super.key, required this.onTap});
+  RegisterPage({super.key, this.onTap});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();

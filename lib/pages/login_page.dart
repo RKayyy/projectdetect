@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:projectssrk/components/my_button.dart';
 import 'package:projectssrk/components/my_textfield.dart';
 import 'package:projectssrk/components/square_tile.dart';
+import 'package:projectssrk/pages/home_page.dart';
+import 'package:projectssrk/pages/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
-
-  LoginPage({super.key, required this.onTap});
+  LoginPage({super.key, this.onTap});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -39,6 +40,12 @@ class _LoginPageState extends State<LoginPage> {
       );
       //pop the circle
       Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                HomePage()), // Replace 'RegisterPage' with the actual name of your register page class
+      );
     } on FirebaseAuthException catch (e) {
       //pop the circle
       Navigator.pop(context);

@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:projectssrk/pages/home_page.dart';
 
 class UserDetailsPage extends StatefulWidget {
   final Function()? onDetailsSubmitted;
@@ -23,16 +24,19 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   final TextEditingController parentsPhoneNumber = TextEditingController();
   final TextEditingController addressController = TextEditingController();
 
-  Future<void> getUserID(String name,int age,String parent_name,int parent_phone_number,String Address) async {
+  Future<void> getUserID(String name, int age, String parent_name,
+      int parent_phone_number, String Address) async {
     // Retrieve the currently signed-in user
     User? user = FirebaseAuth.instance.currentUser;
     String uid = user?.uid ?? ""; // Fetch the UID
     print("User UID: $uid");
     // print(name);
-    await save_user_details1(uid,name,age,parent_name,parent_phone_number,Address);
+    await save_user_details1(
+        uid, name, age, parent_name, parent_phone_number, Address);
   }
 
-  Future<void> save_user_details1(String uid,String name,int age,String parent_name,int parent_phone_number,String Address) async {
+  Future<void> save_user_details1(String uid, String name, int age,
+      String parent_name, int parent_phone_number, String Address) async {
     try {
       final response = await http.post(
         Uri.parse(
