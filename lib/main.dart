@@ -6,8 +6,10 @@ import 'package:lottie/lottie.dart';
 import 'firebase_options.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
+
+
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

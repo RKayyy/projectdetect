@@ -64,61 +64,130 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('User Details'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context); // Close the UserDetailsPage
-            },
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MyTextField(
-              controller: nameController,
-              hintText: 'Name',
-              obscureText: false,
-            ),
-            const SizedBox(height: 20),
-            MyTextField(
-              controller: ageController,
-              hintText: 'Age',
-              obscureText: false,
-            ),
-            const SizedBox(height: 20),
-            MyTextField(
-              controller: parentsNameController,
-              hintText: "Parents' Name",
-              obscureText: false,
-            ),
-            const SizedBox(height: 20),
-            MyTextField(
-              controller: parentsPhoneNumber,
-              hintText: "Parents' Phone Number",
-              obscureText: false,
-            ),
-            const SizedBox(height: 20),
-            MyTextField(
-              controller: addressController,
-              hintText: 'Address',
-              obscureText: false,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              child: Text('Submit details'),
-              onPressed: () {
-                getUserID(nameController.text,int.tryParse(ageController.text) ?? 0,parentsNameController.text,  int.tryParse(parentsPhoneNumber.text) ?? 0,addressController.text);
+      backgroundColor: Color(0xFFEBC272),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Image.asset(
+                    'lib/images/login_image1 (2).png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
 
-                // You can add logic to handle the submission
-              },
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(47, 0, 0, 0),
+                  child: Text(
+                    'Enter Details',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 33,
+                        fontFamily: 'ArimaMadurai',
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+
+                const SizedBox(height: 23),
+
+                MyTextField(
+                  controller: nameController,
+                  hintText: 'Name',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 12.5),
+                MyTextField(
+                  controller: ageController,
+                  hintText: 'Age',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 12.5),
+                MyTextField(
+                  controller: parentsNameController,
+                  hintText: "Parent's Name",
+                  obscureText: false,
+                ),
+                const SizedBox(height: 12.5),
+                MyTextField(
+                  controller: parentsPhoneNumber,
+                  hintText: "Parent's Contact",
+                  obscureText: false,
+                ),
+                const SizedBox(height: 12.5),
+                MyTextField(
+                  controller: addressController,
+                  hintText: 'Address',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 25),
+                // ElevatedButton(
+                //   child: Text('Submit'),
+                //   onPressed: () {
+                //     getUserID(nameController.text,int.tryParse(ageController.text) ?? 0,parentsNameController.text,  int.tryParse(parentsPhoneNumber.text) ?? 0,addressController.text);
+                //
+                //     // You can add logic to handle the submission
+                //   },
+                // ),
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    onPressed: () {
+                      getUserID(
+                        nameController.text,
+                        int.tryParse(ageController.text) ?? 0,
+                        parentsNameController.text,
+                        int.tryParse(parentsPhoneNumber.text) ?? 0,
+                        addressController.text,
+                      );
+
+                      // You can add logic to handle the submission
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.76,
+                      padding: EdgeInsets.symmetric(vertical: 18),
+                      child: Center(
+                        child: Text(
+                          'Submit', // Replace with your desired text
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+
+                const SizedBox(
+                  height: 10,
+                ),
+
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Image.asset(
+                    'lib/images/login_image1 (2).png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
