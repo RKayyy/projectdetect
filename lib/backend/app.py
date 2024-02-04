@@ -103,6 +103,26 @@ def predict():
 
     except Exception as e:
         return jsonify({'error': str(e)})
+@app.route('/prediction_table/<string:firebase_uid>', methods=['GET'])
+def get_prediction_table(firebase_uid):
+    try:
+        predictions = predicted_values.query.filter_by(firebase_uid=firebase_uid).all()
+
+        if predictions:
+            prediction_data = []
+            for prediction in predictions:
+                prediction_data.append({
+                    'id': prediction.id,
+                    'firebase_uid': prediction.firebase_uid,
+                    'predicted_values': prediction.predicted_values,
+                })
+
+            return jsonify({'predictions': prediction_data})
+        else:
+            return jsonify({'message': 'No predictions found for the given user'})
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 @app.route('/save_user_details', methods=['POST'])
 def save_user_details():

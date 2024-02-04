@@ -16,11 +16,37 @@ class ResultHistoryPage extends StatefulWidget {
 
 class _ResultHistoryPageState extends State<ResultHistoryPage> {
   List<Map<String, dynamic>> results = [];
+  List<Map<String, dynamic>> predictions = [];
 
   @override
   void initState() {
     super.initState();
-    fetchResults();
+    fetchResultsAndPredictions();
+  }
+
+  Future<void> fetchResultsAndPredictions() async {
+    await fetchResults();
+    await fetchPredictions();
+  }
+
+  Future<void> fetchPredictions() async {
+    final response = await http
+        .get(Uri.parse('http://127.0.0.1:5566/prediction_table/${widget.uid}'));
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      if (jsonResponse.containsKey('predictions')) {
+        setState(() {
+          predictions =
+              List<Map<String, dynamic>>.from(jsonResponse['predictions']);
+          print(predictions);
+        });
+      } else {
+        print('Predictions key not found in the response');
+      }
+    } else {
+      print('Failed to fetch predictions');
+    }
   }
 
   Future<void> fetchResults() async {
@@ -35,11 +61,9 @@ class _ResultHistoryPageState extends State<ResultHistoryPage> {
           print(results);
         });
       } else {
-        // Handle the case where the 'results' key is not present in the response
         print('Results key not found in the response');
       }
     } else {
-      // Handle error
       print('Failed to fetch result history');
     }
   }
@@ -64,55 +88,84 @@ class _ResultHistoryPageState extends State<ResultHistoryPage> {
       appBar: AppBar(
         title: Text('Result History'),
       ),
-      body: ListView.builder(
-        itemCount: groupResultsByQuiz().length,
-        itemBuilder: (context, index) {
-          final entry = groupResultsByQuiz().entries.toList()[index];
-          final quizId = entry.key;
-          final quizResults = entry.value;
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Quiz $quizId',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SfCartesianChart(
-                primaryXAxis: CategoryAxis(title: AxisTitle(text: 'Attempt')),
-                primaryYAxis:
-                    NumericAxis(title: AxisTitle(text: 'Average Score')),
-                series: [
-                  LineSeries<Map<String, dynamic>, int>(
-                    dataSource: quizResults,
-                    xValueMapper: (result, _) =>
-                        quizResults.indexOf(result) + 1,
-                    yValueMapper: (result, _) => result['average_result'],
-                    name: 'Quiz $quizId',
-                    markerSettings: MarkerSettings(
-                      isVisible: true,
-                    ),
+      body: Column(
+        children: [
+          // Separate chart for predictions
+          if (predictions.isNotEmpty)
+            SfCartesianChart(
+              primaryXAxis: CategoryAxis(title: AxisTitle(text: 'Prediction')),
+              primaryYAxis: NumericAxis(title: AxisTitle(text: 'Value')),
+              series: [
+                LineSeries<Map<String, dynamic>, String>(
+                  dataSource: predictions,
+                  xValueMapper: (prediction, _) =>
+                      'Prediction ${predictions.indexOf(prediction) + 1}',
+                  yValueMapper: (prediction, _) =>
+                      prediction['predicted_values'],
+                  name: 'Predictions',
+                  markerSettings: MarkerSettings(
+                    isVisible: true,
                   ),
-                ],
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: quizResults.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text('Attempt ${index + 1}'),
-                    subtitle: Text(
-                        'Average Result: ${quizResults[index]['average_result']}'),
-                    // Add more details or customize as needed
-                  );
-                },
-              ),
-            ],
-          );
-        },
+                ),
+              ],
+            ),
+          // ListView for quiz results
+          Expanded(
+            child: ListView.builder(
+              itemCount: groupResultsByQuiz().length,
+              itemBuilder: (context, index) {
+                final entry = groupResultsByQuiz().entries.toList()[index];
+                final quizId = entry.key;
+                final quizResults = entry.value;
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Quiz $quizId',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    // Chart for quiz results
+                    SfCartesianChart(
+                      primaryXAxis:
+                          CategoryAxis(title: AxisTitle(text: 'Attempt')),
+                      primaryYAxis:
+                          NumericAxis(title: AxisTitle(text: 'Average Score')),
+                      series: [
+                        LineSeries<Map<String, dynamic>, int>(
+                          dataSource: quizResults,
+                          xValueMapper: (result, _) =>
+                              quizResults.indexOf(result) + 1,
+                          yValueMapper: (result, _) => result['average_result'],
+                          name: 'Quiz $quizId',
+                          markerSettings: MarkerSettings(
+                            isVisible: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // ListView for individual attempts
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: quizResults.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text('Attempt ${index + 1}'),
+                          subtitle: Text(
+                              'Average Result: ${quizResults[index]['average_result']}'),
+                        );
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
