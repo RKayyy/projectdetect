@@ -162,113 +162,143 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('lib/images/giraffe background.png'),
-            fit: BoxFit.cover),
-      ),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-            child: SafeArea(
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 110,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                      child: Text(
-                        'Welcome',
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 33),
-                      ),
-                    ),
-                    const SizedBox(height: 220),
-                    //email/ textfield
-                    MyTextField(
-                      controller: emailController,
-                      hintText: 'Email',
-                      obscureText: false,
-                    ),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    //password textfield
-                    MyTextField(
-                      controller: passwordController,
-                      hintText: 'Password',
-                      obscureText: true,
-                    ),
-
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    //confirm password
-                    MyTextField(
-                      controller: confirmPasswordController,
-                      hintText: 'Confirm Password',
-                      obscureText: true,
-                    ),
-
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    //sign in button
-                    MyButton(
-                      text: "sign Up",
-                      onTap: signUserUp,
-                    ),
-
-                    const SizedBox(height: 50),
-
-                    //or continue with
-
-                    //not a member? register here
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Already have an account?",
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            // Navigate to the register page
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      LoginPage()), // Replace 'RegisterPage' with the actual name of your register page class
-                            );
-                          },
-                          child: const Text(
-                            "Login now",
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
+    return Scaffold(
+      backgroundColor: Color(0xFFEBC272),
+      body: SingleChildScrollView(
+          child: Container(
+        height: MediaQuery.of(context).size.height,
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset(
+                  'lib/images/login_image1 (2).png',
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-          )),
+              const SizedBox(
+                height: 40,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'lib/images/logo-no-background.svg.png',
+                    // Replace with your image file path
+                    width: 120, // Set the width of the image
+                    height: 120, // Set the height of the image
+                    fit: BoxFit.cover, // Adjust the BoxFit property as needed
+                  ),
+                  const SizedBox(width: 30),
+                  // Add some spacing between image and text
+                  Text(
+                    'CountCandy',
+                    style: TextStyle(
+                        color: Colors.black,
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 35,
+                        fontFamily: 'ArimaMadurai'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 26),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(47, 0, 0, 0),
+                child: Text(
+                  'Register',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 33,
+                      fontFamily: 'ArimaMadurai',
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 23),
+              MyTextField(
+                controller: emailController,
+                hintText: 'Email',
+                obscureText: false,
+              ),
+
+              const SizedBox(
+                height: 12.5,
+              ),
+
+              //password textfield
+              MyTextField(
+                controller: passwordController,
+                hintText: 'Password',
+                obscureText: true,
+              ),
+
+              const SizedBox(
+                height: 12.5,
+              ),
+
+              //confirm password
+              MyTextField(
+                controller: confirmPasswordController,
+                hintText: 'Confirm Password',
+                obscureText: true,
+              ),
+
+              const SizedBox(height: 25),
+
+              //sign in button
+              MyButton(
+                text: "Sign Up",
+                onTap: signUserUp,
+              ),
+
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Already a member?",
+                    style: TextStyle(
+                      color: Colors.black,
+                      //fontFamily: 'ArimaMadurai',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  GestureDetector(
+                    onTap: widget.onTap,
+                    child: const Text(
+                      "Login now",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                        //fontFamily: 'ArimaMadurai',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset(
+                  'lib/images/login_image1 (2).png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          ),
+        ),
+      )),
     );
   }
 }
