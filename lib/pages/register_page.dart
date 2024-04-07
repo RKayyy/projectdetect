@@ -162,113 +162,163 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('lib/images/giraffe background.png'),
-            fit: BoxFit.cover),
-      ),
-      child: Scaffold(
+        decoration: BoxDecoration(
+          color: Color(0xFFEBC272),
+          image: DecorationImage(
+            image: AssetImage('lib/images/background.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: Scaffold(
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
             child: SafeArea(
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 110,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                      child: Text(
-                        'Welcome',
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 33),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(0.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 180,
                       ),
-                    ),
-                    const SizedBox(height: 220),
-                    //email/ textfield
-                    MyTextField(
-                      controller: emailController,
-                      hintText: 'Email',
-                      obscureText: false,
-                    ),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    //password textfield
-                    MyTextField(
-                      controller: passwordController,
-                      hintText: 'Password',
-                      obscureText: true,
-                    ),
-
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    //confirm password
-                    MyTextField(
-                      controller: confirmPasswordController,
-                      hintText: 'Confirm Password',
-                      obscureText: true,
-                    ),
-
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    //sign in button
-                    MyButton(
-                      text: "sign Up",
-                      onTap: signUserUp,
-                    ),
-
-                    const SizedBox(height: 50),
-
-                    //or continue with
-
-                    //not a member? register here
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Already have an account?",
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            // Navigate to the register page
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      LoginPage()), // Replace 'RegisterPage' with the actual name of your register page class
-                            );
-                          },
-                          child: const Text(
-                            "Login now",
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold),
+                      Container(
+                        width: screenWidth,
+                        padding: EdgeInsets.fromLTRB(0, 30, 0, 30.0),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEBC272),
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(
+                                10.0), // Set top vertical radius
+                            bottom: Radius.circular(
+                                10.0), // Set bottom vertical radius to zero (no radius)
                           ),
-                        )
-                      ],
-                    )
-                  ],
+                          border: Border.all(color: Colors.white),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(width: 50),
+                            Row(
+                              children: [
+                                const SizedBox(width: 30),
+                                Image.asset(
+                                  'lib/images/App_logo.png',
+                                  width: 75, // Adjust the width as needed
+                                  height: 75, // Adjust the height as needed
+                                ),
+                                const SizedBox(width: 20),
+                                Text(
+                                  'CountCandy',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 43,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                              child: Text(
+                                'Register',
+                                style: TextStyle(
+                                    color: const Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 33),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            //email/ textfield
+                            MyTextField(
+                              controller: emailController,
+                              hintText: 'Email',
+                              obscureText: false,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+
+                            //password textfield
+                            MyTextField(
+                              controller: passwordController,
+                              hintText: 'Password',
+                              obscureText: true,
+                            ),
+
+                            const SizedBox(
+                              height: 10,
+                            ),
+
+                            //confirm password
+                            MyTextField(
+                              controller: confirmPasswordController,
+                              hintText: 'Confirm Password',
+                              obscureText: true,
+                            ),
+
+                            const SizedBox(
+                              height: 10,
+                            ),
+
+                            const SizedBox(height: 25),
+
+                            //sign in button
+                            MyButton(
+                              text: "sign Up",
+                              onTap: signUserUp,
+                            ),
+
+                            const SizedBox(height: 50),
+
+                            //or continue with
+
+                            //not a member? register here
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Already have an account?",
+                                  style: TextStyle(color: Colors.grey[700]),
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    // Navigate to the register page
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              LoginPage()), // Replace 'RegisterPage' with the actual name of your register page class
+                                    );
+                                  },
+                                  child: const Text(
+                                    "Login now",
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          )),
-    );
+          ),
+        ));
   }
 }

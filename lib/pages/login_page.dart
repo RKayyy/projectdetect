@@ -73,11 +73,13 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(
+        color: Color(0xFFEBC272),
         image: DecorationImage(
-          image: AssetImage('lib/images/giraffe background.png'),
-          fit: BoxFit.cover,
+          image: AssetImage('lib/images/background.png'),
+          fit: BoxFit.fill,
         ),
       ),
       child: Scaffold(
@@ -87,98 +89,119 @@ class _LoginPageState extends State<LoginPage> {
             child: Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(0.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 110,
+                      height: 180,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                      child: Text(
-                        'Welcome\nBack',
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 23, 0, 0),
-                            fontSize: 33),
+                    Container(
+                      width: screenWidth,
+                      padding: EdgeInsets.fromLTRB(0, 30, 0, 30.0),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFEBC272),
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(10.0), // Set top vertical radius
+                          bottom: Radius.circular(
+                              10.0), // Set bottom vertical radius to zero (no radius)
+                        ),
+                        border: Border.all(color: Colors.white),
                       ),
-                    ),
-                    const SizedBox(height: 220),
-
-                    //username textfield
-                    MyTextField(
-                      controller: emailController,
-                      hintText: 'Email',
-                      obscureText: false,
-                    ),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    //password textfield
-                    MyTextField(
-                      controller: passwordController,
-                      hintText: 'Password',
-                      obscureText: true,
-                    ),
-
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    //forgot password
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Forgot Password?',
-                          style: TextStyle(color: Colors.grey[600]),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    //sign in button
-                    MyButton(
-                      text: "Sign In",
-                      onTap: signUserIn,
-                    ),
-
-                    const SizedBox(height: 50),
-
-                    //not a member? register here
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Not a member?",
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            // Navigate to the register page
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      RegisterPage()), // Replace 'RegisterPage' with the actual name of your register page class
-                            );
-                          },
-                          child: const Text(
-                            "Register now",
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(width: 50),
+                          Row(
+                            children: [
+                              const SizedBox(width: 30),
+                              Image.asset(
+                                'lib/images/App_logo.png',
+                                width: 75, // Adjust the width as needed
+                                height: 75, // Adjust the height as needed
+                              ),
+                              const SizedBox(width: 20),
+                              Text(
+                                'CountCandy',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 43,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                color: const Color.fromARGB(255, 23, 0, 0),
+                                fontSize: 33,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    )
+                          const SizedBox(height: 20),
+                          MyTextField(
+                            controller: emailController,
+                            hintText: 'Email',
+                            obscureText: false,
+                          ),
+                          const SizedBox(height: 10),
+                          MyTextField(
+                            controller: passwordController,
+                            hintText: 'Password',
+                            obscureText: true,
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                'Forgot Password?',
+                                style: TextStyle(color: Colors.grey[600]),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 25),
+                          MyButton(
+                            text: "Sign In",
+                            onTap: signUserIn,
+                          ),
+                          const SizedBox(height: 15),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Not a member?",
+                                style: TextStyle(color: Colors.grey[700]),
+                              ),
+                              const SizedBox(width: 4),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RegisterPage(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  "Register now",
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
