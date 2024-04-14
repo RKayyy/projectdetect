@@ -24,7 +24,6 @@ class QuizTypeButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.zero,
-          minimumSize: Size(double.infinity, 120), // Set minimum size to take full width
           backgroundColor: button_color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
