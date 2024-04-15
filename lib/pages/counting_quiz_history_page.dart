@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CountResultsPage extends StatelessWidget {
@@ -44,7 +46,9 @@ class CountResultsPage extends StatelessWidget {
               ),
             ),
             // Chart for quiz results
-            Expanded(
+            Container(
+              height: 252,
+              color: Colors.white,
               child: SfCartesianChart(
                 primaryXAxis: CategoryAxis(title: AxisTitle(text: 'Attempt')),
                 primaryYAxis:
@@ -63,27 +67,33 @@ class CountResultsPage extends StatelessWidget {
               ),
             ),
             // ListView for individual attempts
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: resultsForQuiz2.length,
-                itemBuilder: (context, index) {
-                  final result = resultsForQuiz2[index];
-                  return Container(
-                    height: 60,
-                    width: 150,
-                    decoration: BoxDecoration(
-                      color: Colors.white, // Background color for the container
-                      borderRadius: BorderRadius.circular(
-                          15), // Radius for the curved corners
-                    ),
-                    child: ListTile(
-                      title: Text('Attempt ${index + 1}'),
-                      subtitle:
-                          Text('Average Result: ${result['average_result']}'),
-                    ),
-                  );
-                },
+            Center(
+              child: Container(
+                width: 80,
+                height: 500,
+                child: SingleChildScrollView(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: resultsForQuiz2.length,
+                    itemBuilder: (context, index) {
+                      final result = resultsForQuiz2[index];
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 247, 131,
+                              131), // Background color for the container
+                          borderRadius: BorderRadius.circular(
+                              15), // Radius for the curved corners
+                        ),
+                        child: ListTile(
+                          minLeadingWidth: 100,
+                          title: Text('Attempt ${index + 1}'),
+                          subtitle: Text(
+                              'Average Result: ${result['average_result']}'),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ),
             ),
           ],
