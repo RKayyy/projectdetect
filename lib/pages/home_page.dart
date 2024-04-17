@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:projectssrk/components/my_button.dart';
 import 'package:projectssrk/components/quiztype_button.dart';
 import 'package:projectssrk/pages/login_page.dart';
@@ -54,7 +55,18 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color(0xFFF6F6F6),
+        decoration: BoxDecoration(
+          color: Color(0xFFF6F6F6), // Background color
+          image: DecorationImage(
+            image: AssetImage('lib/images/background.png'), // Image asset
+            fit:
+                BoxFit.cover, // Adjusts the image to cover the entire container
+            colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.1), // 10% opacity (90% transparent)
+              BlendMode.dstATop, // Apply the opacity to the image
+            ),
+          ),
+        ),
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           const SizedBox(height: 55),
           Row(
@@ -115,20 +127,7 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  PopupMenuItem(
-                    value: "settings",
-                    child: Row(
-                      children: [
-                        Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Icon(Icons.settings)),
-                        const Text(
-                          'Settings',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                  ),
+                  
                   PopupMenuItem(
                     value: "logout",
                     child: Row(
@@ -150,58 +149,224 @@ class HomePage extends StatelessWidget {
           SizedBox(height: 20),
           CarouselSlider(
             items: [
+
               if (listfromresult != null &&
                   listfromresult['counting'] != null &&
                   listfromresult['counting']!.isNotEmpty)
-                Stack(
-                  children: [
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Image.asset("lib/images/giraffe_carousel.png")),
-                    Positioned(
-                      right: 15,
-                      top: 15,
-                      child: CircularPercentIndicator(
-                        radius: 80.0,
-                        lineWidth: 10.0,
-                        percent: (listfromresult["counting"]
-                                    ?.fold(0, (a, b) => a + b) ??
-                                0) /
-                            12.5,
-                        center: Text(
-                          "${((listfromresult["counting"]?.fold(0, (a, b) => a + b) ?? 0) / 12.5 * 100).toStringAsFixed(2)}%",
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                        progressColor: Colors.blue,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Set background color to white
+                    borderRadius:
+                        BorderRadius.circular(10), // Add rounded corners
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5), // Set shadow color
+                        spreadRadius: 4, // Set spread radius
+                        blurRadius: 10, // Set shadow offset
                       ),
-                    )
-                  ],
+                    ],
+                  ),
+                  child: Stack(
+                    children: [
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20.0, 0, 0, 0),
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 25,
+                                ),
+                                Container(
+                                  height: 26,
+                                  width: 91,
+                                  decoration: BoxDecoration(
+                                    color: Color(
+                                        0xFF373737), // Set background color to white
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Add rounded corners
+                                    
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Counting",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                          fontFamily: AutofillHints.birthday 
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Container(
+                                  height: 100,
+                                  width: 90,
+                                  decoration: BoxDecoration(
+                                    color: Color(
+                                        0xFFEBC272), // Set background color to white
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Add rounded corners
+                                    
+                                  ),
+                                  
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      
+                                      " Total Questions: 5 \n \n Correct: ${((listfromresult["counting"]?.fold(0, (a, b) => a + b) ?? 0)).toStringAsFixed(0)} \nIncorrect: ${(5 - (listfromresult["counting"]?.fold(0, (a, b) => a + b) ?? 0)).toStringAsFixed(2)}",
+                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,
+                                          color: Colors.white,),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 25,
+                          ),
+                          Positioned(
+                            right: 0,
+                            top: 015,
+                            child: CircularPercentIndicator(
+                              radius: 80.0,
+                              lineWidth: 12.0,
+                              percent: (listfromresult["counting"]
+                                          ?.fold(0, (a, b) => a + b) ??
+                                      0) /
+                                  12.5,
+                              center: Text(
+                                "${((listfromresult["counting"]?.fold(0, (a, b) => a + b) ?? 0) / 12.5 * 100).toStringAsFixed(2)}%",
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                              progressColor: Color(0xFFEBC272),
+                              backgroundColor: Color(
+                                          0xFF373737),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 )
               else
-                Stack(children: [
-                  ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Image.asset("lib/images/giraffe_carousel.png")),
-                  Positioned(
-                      right: 15,
-                      top: 15,
-                      child: Text(
-                        "Please attempt \nthe counting quiz \nfor your results",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.2,
-                          shadows: [
-                            Shadow(
-                              color: Colors.black.withOpacity(0.5),
-                              offset: Offset(2.0, 2.0),
-                              blurRadius: 5.0,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Set background color to white
+                    borderRadius:
+                        BorderRadius.circular(10), // Add rounded corners
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5), // Set shadow color
+                        spreadRadius: 4, // Set spread radius
+                        blurRadius: 10, // Set blur radius
+                      ),
+                    ],
+                  ),
+                  child: Stack(
+                    children: [
+                      Align(
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 15,
                             ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(12.0, 0, 0, 0),
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
+                                  Container(
+                                    height: 26,
+                                    width: 91,
+                                    decoration: BoxDecoration(
+                                      color: Color(
+                                          0xFF373737), // Set background color to white
+                                      borderRadius: BorderRadius.circular(
+                                          30), // Add rounded corners
+                                      
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Counting",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: AutofillHints.birthday 
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                  Container(
+                                    height: 100,
+                                    width: 90,
+                                    decoration: BoxDecoration(
+                                      color: Color(
+                                          0xFFEBC272), // Set background color to white
+                                      borderRadius: BorderRadius.circular(
+                                          10), // Add rounded corners
+                                      
+                                    ),
+                                    
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        " Total Questions: 5 \n \n Correct: N/A \nIncorrect: N/A",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 25,
+                            ),
+                            Positioned(
+                              right: 0,
+                              top: 015,
+                              child: CircularPercentIndicator(
+                                radius: 80.0,
+                                lineWidth: 12.0,
+                                percent:0,
+                                center: Text(
+                                  "0%",
+                                  style: TextStyle(fontSize: 16.0),
+                                ),
+                                progressColor: Color(0xFFEBC272),
+                                backgroundColor: Color(
+                                          0xFF373737), 
+                              ),
+                            )
                           ],
                         ),
-                      ))
-                ]),
+                      ),
+                    ],
+                  ),
+                ),
               if (listfromresult != null &&
                   listfromresult['coloring'] != null &&
                   listfromresult['coloring']!.isNotEmpty)
@@ -213,9 +378,8 @@ class HomePage extends StatelessWidget {
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5), // Set shadow color
-                        spreadRadius: 7, // Set spread radius
-                        blurRadius: 7, // Set blur radius
-                        offset: Offset(0, 0), // Set shadow offset
+                        spreadRadius: 4, // Set spread radius
+                        blurRadius: 10, // Set shadow offset
                       ),
                     ],
                   ),
@@ -224,68 +388,67 @@ class HomePage extends StatelessWidget {
                       Row(
                         children: [
                           const SizedBox(
-                            width: 13,
+                            width: 15,
                           ),
-                          Column(
-                            children: [
-                              const SizedBox(
-                                height: 22,
-                              ),
-                              Container(
-                                height: 26,
-                                width: 91,
-                                decoration: BoxDecoration(
-                                  color: Color(
-                                      0xFF373737), // Set background color to white
-                                  borderRadius: BorderRadius.circular(
-                                      10), // Add rounded corners
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey
-                                          .withOpacity(0.5), // Set shadow color
-                                      spreadRadius: 5, // Set spread radius
-                                      blurRadius: 7, // Set blur radius
-                                      offset: Offset(0, 3), // Set shadow offset
-                                    ),
-                                  ],
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20.0, 0, 0, 0),
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 25,
                                 ),
-                                child: Text(
-                                  "Coloring",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
+                                Container(
+                                  height: 26,
+                                  width: 91,
+                                  decoration: BoxDecoration(
+                                    color: Color(
+                                        0xFF373737), // Set background color to white
+                                    borderRadius: BorderRadius.circular(
+                                        30), // Add rounded corners
+                                    
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Container(
-                                height: 90,
-                                width: 91,
-                                decoration: BoxDecoration(
-                                  color: Color(
-                                      0xFFEBC272), // Set background color to white
-                                  borderRadius: BorderRadius.circular(
-                                      10), // Add rounded corners
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey
-                                          .withOpacity(0.5), // Set shadow color
-                                      spreadRadius: 5, // Set spread radius
-                                      blurRadius: 7, // Set blur radius
-                                      offset: Offset(0, 3), // Set shadow offset
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Coloring",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                          fontFamily: AutofillHints.birthday 
+                                      ),
+                                      textAlign: TextAlign.center,
                                     ),
-                                  ],
+                                  ),
                                 ),
-                                child: Text(
-                                  " Total Questions: 5 \n \n Correct: ${((listfromresult["coloring"]?.fold(0, (a, b) => a + b) ?? 0)).toStringAsFixed(0)} \nIncorrect: ${(5 - (listfromresult["coloring"]?.fold(0, (a, b) => a + b) ?? 0)).toStringAsFixed(2)}",
-                                  style: TextStyle(fontSize: 12),
-                                  textAlign: TextAlign.center,
+                                const SizedBox(
+                                  height: 12,
                                 ),
-                              )
-                            ],
+                                Container(
+                                  height: 100,
+                                  width: 90,
+                                  decoration: BoxDecoration(
+                                    color: Color(
+                                        0xFFEBC272), // Set background color to white
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Add rounded corners
+                                    
+                                  ),
+                                  
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      
+                                      " Total Questions: 5 \n \n Correct: ${((listfromresult["coloring"]?.fold(0, (a, b) => a + b) ?? 0)).toStringAsFixed(0)} \nIncorrect: ${(5 - (listfromresult["coloring"]?.fold(0, (a, b) => a + b) ?? 0)).toStringAsFixed(2)}",
+                                      style: TextStyle(fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                          color: Colors.white,),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                           const SizedBox(
                             width: 25,
@@ -295,7 +458,7 @@ class HomePage extends StatelessWidget {
                             top: 015,
                             child: CircularPercentIndicator(
                               radius: 80.0,
-                              lineWidth: 10.0,
+                              lineWidth: 12.0,
                               percent: (listfromresult["coloring"]
                                           ?.fold(0, (a, b) => a + b) ??
                                       0) /
@@ -305,6 +468,8 @@ class HomePage extends StatelessWidget {
                                 style: TextStyle(fontSize: 16.0),
                               ),
                               progressColor: Color(0xFFEBC272),
+                              backgroundColor: Color(
+                                          0xFF373737),
                             ),
                           )
                         ],
@@ -313,87 +478,332 @@ class HomePage extends StatelessWidget {
                   ),
                 )
               else
-                Stack(children: [
-                  ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Image.asset("lib/images/giraffe_carousel.png")),
-                  Positioned(
-                      right: 15,
-                      top: 15,
-                      child: Text(
-                        "Please attempt \nthe coloring quiz \nfor your results",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.2,
-                          shadows: [
-                            Shadow(
-                              color: Colors.black.withOpacity(0.5),
-                              offset: Offset(2.0, 2.0),
-                              blurRadius: 5.0,
+              //------------------------------------------------------------------------------------------
+
+
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Set background color to white
+                    borderRadius:
+                        BorderRadius.circular(10), // Add rounded corners
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5), // Set shadow color
+                        spreadRadius: 4, // Set spread radius
+                        blurRadius: 10,  // Set shadow offset
+                      ),
+                    ],
+                  ),
+                  child: Stack(
+                    children: [
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(12.0, 0, 0, 0),
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 25,
+                                ),
+                                Container(
+                                  height: 26,
+                                  width: 91,
+                                  decoration: BoxDecoration(
+                                    color: Color(
+                                        0xFF373737), // Set background color to white
+                                    borderRadius: BorderRadius.circular(
+                                        30), // Add rounded corners
+                                    
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Coloring",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                          fontFamily: AutofillHints.birthday 
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Container(
+                                  height: 100,
+                                  width: 90,
+                                  decoration: BoxDecoration(
+                                    color: Color(
+                                        0xFFEBC272), // Set background color to white
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Add rounded corners
+                                    
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      " Total Questions: 5 \n \n Correct: N/A \nIncorrect: N/A",
+                                      style: TextStyle(fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                          color: Colors.white,),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
-                          ],
-                        ),
-                      ))
-                ]),
+                          ),
+                          const SizedBox(
+                            width: 25,
+                          ),
+                          Positioned(
+                            right: 0,
+                            top: 015,
+                            child: CircularPercentIndicator(
+                              radius: 80.0,
+                              lineWidth: 12.0,
+                              percent:0,
+                              center: Text(
+                                "0%",
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                              progressColor: Color(0xFFEBC272),
+                              backgroundColor: Color(
+                                          0xFF373737),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+
+                //-----------------------------------------------------------------------------
               if (listfromresult != null &&
                   listfromresult['calculate'] != null &&
                   listfromresult['calculate']!.isNotEmpty)
-                Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Image.asset("lib/images/giraffe_carousel.png"),
-                    ),
-                    Positioned(
-                      right: 15,
-                      top: 15,
-                      child: CircularPercentIndicator(
-                        radius: 80.0,
-                        lineWidth: 10.0,
-                        percent: (listfromresult["calculate"]
-                                    ?.fold(0, (a, b) => a + b) ??
-                                0) /
-                            12.5,
-                        center: Text(
-                          "${((listfromresult["calculate"]?.fold(0, (a, b) => a + b) ?? 0) / 12.5 * 100).toStringAsFixed(2)}%",
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                        progressColor: Colors.red,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Set background color to white
+                    borderRadius:
+                        BorderRadius.circular(10), // Add rounded corners
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5), // Set shadow color
+                        spreadRadius: 4, // Set spread radius
+                        blurRadius: 10, // Set shadow offset
                       ),
-                    )
-                  ],
+                    ],
+                  ),
+                  child: Stack(
+                    children: [
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20.0, 0, 0, 0),
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 25,
+                                ),
+                                Container(
+                                  height: 26,
+                                  width: 91,
+                                  decoration: BoxDecoration(
+                                    color: Color(
+                                        0xFF373737), // Set background color to white
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Add rounded corners
+                                    
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Calculation",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                          fontFamily: AutofillHints.birthday 
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Container(
+                                  height: 100,
+                                  width: 90,
+                                  decoration: BoxDecoration(
+                                    color: Color(
+                                        0xFFEBC272), // Set background color to white
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Add rounded corners
+                                    
+                                  ),
+                                  
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      
+                                      " Total Questions: 5 \n \n Correct: ${((listfromresult["calculate"]?.fold(0, (a, b) => a + b) ?? 0)).toStringAsFixed(0)} \nIncorrect: ${(5 - (listfromresult["calculate"]?.fold(0, (a, b) => a + b) ?? 0)).toStringAsFixed(2)}",
+                                      style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold,
+                                          color: Colors.white,),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 25,
+                          ),
+                          Positioned(
+                            right: 0,
+                            top: 015,
+                            child: CircularPercentIndicator(
+                              radius: 80.0,
+                              lineWidth: 12.0,
+                              percent: (listfromresult["calculate"]
+                                          ?.fold(0, (a, b) => a + b) ??
+                                      0) /
+                                  12.5,
+                              center: Text(
+                                "${((listfromresult["calculate"]?.fold(0, (a, b) => a + b) ?? 0) / 12.5 * 100).toStringAsFixed(2)}%",
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                              progressColor: Color(0xFFEBC272),
+                              backgroundColor: Color(
+                                          0xFF373737),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 )
               else
-                Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Image.asset("lib/images/giraffe_carousel.png"),
-                    ),
-                    Positioned(
-                      right: 15,
-                      top: 15,
-                      child: Text(
-                        "Please attempt \nthe calculating quiz \nfor your results",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.2,
-                          shadows: [
-                            Shadow(
-                              color: Colors.black.withOpacity(0.5),
-                              offset: Offset(2.0, 2.0),
-                              blurRadius: 5.0,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Set background color to white
+                    borderRadius:
+                        BorderRadius.circular(10), // Add rounded corners
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5), // Set shadow color
+                        spreadRadius: 4, // Set spread radius
+                        blurRadius: 10, // Set blur radius
+                      ),
+                    ],
+                  ),
+                  child: Stack(
+                    children: [
+                      Align(
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 15,
                             ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(12.0, 0, 0, 0),
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
+                                  Container(
+                                    height: 26,
+                                    width: 91,
+                                    decoration: BoxDecoration(
+                                      color: Color(
+                                          0xFF373737), // Set background color to white
+                                      borderRadius: BorderRadius.circular(
+                                          30), // Add rounded corners
+                                      
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Calculation",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: AutofillHints.birthday 
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                  Container(
+                                    height: 100,
+                                    width: 90,
+                                    decoration: BoxDecoration(
+                                      color: Color(
+                                          0xFFEBC272), // Set background color to white
+                                      borderRadius: BorderRadius.circular(
+                                          10), // Add rounded corners
+                                      
+                                    ),
+                                    
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        " Total Questions: 5 \n \n Correct: N/A \nIncorrect: N/A",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 25,
+                            ),
+                            Positioned(
+                              right: 0,
+                              top: 015,
+                              child: CircularPercentIndicator(
+                                radius: 80.0,
+                                lineWidth: 12.0,
+                                percent:0,
+                                center: Text(
+                                  "0%",
+                                  style: TextStyle(fontSize: 16.0),
+                                ),
+                                progressColor: Color(0xFFEBC272),
+                                backgroundColor: Color(
+                                          0xFF373737), 
+                              ),
+                            )
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+
             ],
             options: CarouselOptions(
               height: 200.0,
@@ -406,6 +816,7 @@ class HomePage extends StatelessWidget {
               viewportFraction: 0.8,
             ),
           ),
+          SizedBox(height:  20),
           Container(
             child: Column(
               children: [
