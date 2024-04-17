@@ -101,11 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.fromLTRB(0, 30, 0, 30.0),
                       decoration: BoxDecoration(
                         color: Color(0xFFEBC272),
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(10.0), // Set top vertical radius
-                          bottom: Radius.circular(
-                              10.0), // Set bottom vertical radius to zero (no radius)
-                        ),
+                        
                         border: Border.all(color: Colors.white),
                       ),
                       child: Column(
