@@ -74,36 +74,70 @@ class _QuizPageState extends State<QuizPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz'),
-        backgroundColor: Colors.transparent,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Transform.scale(
-              scale: 1.25,
-              child: Image.asset(
-                shuffledQuestions[currentQuestionIndex].questionText,
-                width: 200, // Adjust the width as needed
-                height: 200, // Adjust the height as needed
+        backgroundColor: Color(0xFFF6F6F6), // Background color
+        title: Text('Result History'),
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('lib/images/background.png'), // Image asset
+              fit:
+                  BoxFit.cover, // Adjusts the image to cover the entire app bar
+              colorFilter: ColorFilter.mode(
+                Colors.white.withOpacity(0.1), // 10% opacity (90% transparent)
+                BlendMode.dstATop, // Apply the opacity to the image
               ),
             ),
-            SizedBox(height: 40.0),
-            Column(
-              children: List.generate(
-                shuffledQuestions[currentQuestionIndex].options.length,
-                (index) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: ElevatedButton(
-                    onPressed: () => checkAnswer(index),
-                    child: Text(
-                        shuffledQuestions[currentQuestionIndex].options[index]),
+          ),
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/images/background.png'), // Image asset
+            fit: BoxFit.cover, // Adjusts the image to cover the entire app bar
+            colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.1), // 10% opacity (90% transparent)
+              BlendMode.dstATop, // Apply the opacity to the image
+            ),
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Transform.scale(
+                scale: 1.25,
+                child: Image.asset(
+                  shuffledQuestions[currentQuestionIndex].questionText,
+                  width: 200, // Adjust the width as needed
+                  height: 200, // Adjust the height as needed
+                ),
+              ),
+              SizedBox(height: 40.0),
+              Column(
+                children: List.generate(
+                  shuffledQuestions[currentQuestionIndex].options.length,
+                  (index) => Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: ElevatedButton(
+                      onPressed: () => checkAnswer(index),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Color(0xFFEBC272), // Button color EBC272
+                        minimumSize:
+                            Size(270, 45), // Button width 270 and height 45
+                      ),
+                      child: Text(
+                        shuffledQuestions[currentQuestionIndex].options[index],
+                        style: TextStyle(color: Colors.black, fontSize: 25),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
