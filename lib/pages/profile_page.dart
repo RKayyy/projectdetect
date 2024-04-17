@@ -29,7 +29,8 @@ class _ProfilePageState extends State<ProfilePage> {
       print("User UID: $_uid");
 
       // Use the retrieved UID to get user details
-      final response = await http.get(Uri.parse('http://127.0.0.1:5566/get_user_details/$_uid'));
+      final response = await http
+          .get(Uri.parse('http://127.0.0.1:5566/get_user_details/$_uid'));
       print(response.statusCode);
 
       if (response.statusCode == 200) {
@@ -63,43 +64,156 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 16),
-            Column(
-              children: [
-                Text(
-                  'User ID: $_uid',
-                  style: TextStyle(fontSize: 18),
-                ),
-                Text(
-                  'Child Name: ${_userDetails['child_name'] ?? 'N/A'}',
-                  style: TextStyle(fontSize: 18),
-                ),
-                Text(
-                  'Child Age: ${_userDetails['child_age'] ?? 'N/A'}',
-                  style: TextStyle(fontSize: 18),
-                ),
-                Text(
-                  'Parent Name: ${_userDetails['parent_name'] ?? 'N/A'}',
-                  style: TextStyle(fontSize: 18),
-                ),
-                Text(
-                  'Parent Phone: ${_userDetails['parent_phone_number'] ?? 'N/A'}',
-                  style: TextStyle(fontSize: 18),
-                ),
-                Text(
-                  'Address: ${_userDetails['address'] ?? 'N/A'}',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
+        backgroundColor: Color(0xFFF6F6F6), // Background color
+        title: Text('Profile Page'),
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('lib/images/background.png'), // Image asset
+              fit:
+                  BoxFit.cover, // Adjusts the image to cover the entire app bar
+              colorFilter: ColorFilter.mode(
+                Colors.white.withOpacity(0.1), // 10% opacity (90% transparent)
+                BlendMode.dstATop, // Apply the opacity to the image
+              ),
             ),
-          ],
+          ),
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/images/background.png'), // Image asset
+            fit: BoxFit.cover, // Adjusts the image to cover the entire app bar
+            colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.1), // 10% opacity (90% transparent)
+              BlendMode.dstATop, // Apply the opacity to the image
+            ),
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 16),
+              Column(
+                children: [
+                  Container(
+                    width: 270,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color(0xFFEBC272)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'User ID:\n',
+                          style: TextStyle(fontSize: 12),
+                          textAlign: TextAlign.left,
+                        ),
+                        Text(
+                          '$_uid',
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 270,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color(0xFFEBC272)),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Child Name:\n',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Text(
+                          '${_userDetails['child_name'] ?? 'N/A'}',
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 270,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color(0xFFEBC272)),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Child Age:\n',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Text(
+                          '${_userDetails['child_age'] ?? 'N/A'}',
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 270,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color(0xFFEBC272)),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Parent Name:\n',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Text(
+                          '${_userDetails['parent_name'] ?? 'N/A'}',
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 270,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color(0xFFEBC272)),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Parent Phone:\n',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Text(
+                          '${_userDetails['parent_phone_number'] ?? 'N/A'}',
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 270,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color(0xFFEBC272)),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Address:\n',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Text(
+                          '${_userDetails['address'] ?? 'N/A'}',
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
