@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:projectssrk/models/answers.dart';
 import 'dart:convert';
@@ -168,57 +169,128 @@ class _QuizResultPageState extends State<QuizResultPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz Result'),
+        title: Text('Results'),
+        backgroundColor: Colors.transparent, // Make the app bar transparent
+        elevation: 0, // Remove the app bar's elevation
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('lib/images/background.png'), // Image asset
+              fit:
+                  BoxFit.cover, // Adjusts the image to cover the entire app bar
+              colorFilter: ColorFilter.mode(
+                Colors.white.withOpacity(0.1), // 10% opacity (90% transparent)
+                BlendMode.dstATop, // Apply the opacity to the image
+              ),
+            ),
+          ),
+        ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Quiz has ended!',
-              style: TextStyle(fontSize: 20.0),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/images/background.png'), // Image asset
+            fit:
+                BoxFit.cover, // Adjusts the image to cover the entire container
+            colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.1), // 10% opacity (90% transparent)
+              BlendMode.dstATop, // Apply the opacity to the image
             ),
-            SizedBox(height: 20.0),
-            Text(
-              'Your total score for ${widget.quizType} questions is ${calculateScore()} %',
-              style: TextStyle(fontSize: 16.0),
-            ),
-            Text(
-              'Your answers are: ${widget.userAnswers}',
-            ),
-            SizedBox(height: 20.0),
-            allQuizzesAttempted
-                ? ElevatedButton(
-                    onPressed: () async {
-                      await getUserID1(widget.userAnswers);
-                      await getUserID();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(
-                            listfromresult: widget.userAnswers,
+          ),
+          // Replace with your desired background color and opacity
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Image.asset("lib/images/Result_page.png",
+                  width: 340, height: 350),
+              Text(
+                'Tiny Rockstar! Your Results\n are here!',
+                style: TextStyle(fontSize: 20.0),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.0),
+              Container(
+                width: 300,
+                height: 110,
+                decoration: BoxDecoration(
+                    color: Color(0xFF373737),
+                    borderRadius: BorderRadius.circular(15)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Your accuracy score for ${widget.quizType} questions is',
+                      style: TextStyle(fontSize: 14.0, color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${calculateScore()} %',
+                      style: TextStyle(fontSize: 45, color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                'Quiz-tastic! Your brain is like a superhero -\n swooping in to save the day!',
+                style: TextStyle(fontSize: 13),
+              ),
+              SizedBox(height: 40.0),
+              allQuizzesAttempted
+                  ? ElevatedButton(
+                      onPressed: () async {
+                        await getUserID1(widget.userAnswers);
+                        await getUserID();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(
+                              listfromresult: widget.userAnswers,
+                            ),
                           ),
-                        ),
-                      ); // Go back to the home page
-                    },
-                    child: Text('Submit Quiz Results'),
-                  )
-                : ElevatedButton(
-                    onPressed: () async {
-                      await getUserID1(widget.userAnswers);
-                      await getUserID();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(
-                            listfromresult: widget.userAnswers,
+                        ); // Go back to the home page
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Color(0xFFEBC272), // Button color EBC272
+                        minimumSize: Size(270, 60),
+                        // Button width 270 and height 45
+                      ),
+                      child: Text(
+                        'Submit Quiz Results',
+                        style: TextStyle(fontSize: 25, color: Colors.black),
+                      ),
+                    )
+                  : ElevatedButton(
+                      onPressed: () async {
+                        await getUserID1(widget.userAnswers);
+                        await getUserID();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(
+                              listfromresult: widget.userAnswers,
+                            ),
                           ),
-                        ),
-                      ); // Go back to the home page
-                    },
-                    child: Text('Go to Home'),
-                  ),
-          ],
+                        ); // Go back to the home page
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Color(0xFFEBC272), // Button color EBC272
+                        minimumSize:
+                            Size(270, 60), // Button width 270 and height 45
+                      ),
+                      child: Text(
+                        'Go to Home',
+                        style: TextStyle(fontSize: 25, color: Colors.black),
+                      ),
+                    )
+            ],
+          ),
         ),
       ),
     );

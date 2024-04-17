@@ -182,8 +182,10 @@ class _ResultHistoryPageState extends State<ResultHistoryPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        CountResultsPage(quizResults: groupResultsByQuiz()),
+                    builder: (context) => CountResultsPage(
+                      quizResults: groupResultsByQuiz(),
+                      id: 2,
+                    ),
                   ),
                 ); // Go back to the home page
               },
@@ -202,7 +204,17 @@ class _ResultHistoryPageState extends State<ResultHistoryPage> {
             ),
             SizedBox(height: 15), // Spacer for second button
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CountResultsPage(
+                      quizResults: groupResultsByQuiz(),
+                      id: 1,
+                    ),
+                  ),
+                ); // Go back to the home page
+              },
               style: ElevatedButton.styleFrom(
                 fixedSize: Size(270, 46),
                 backgroundColor: Color(0xFFEBC272), // Button color
@@ -218,7 +230,17 @@ class _ResultHistoryPageState extends State<ResultHistoryPage> {
             ),
             SizedBox(height: 15), // Spacer for third button
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CountResultsPage(
+                      quizResults: groupResultsByQuiz(),
+                      id: 3,
+                    ),
+                  ),
+                ); // Go back to the home page
+              },
               style: ElevatedButton.styleFrom(
                 fixedSize: Size(270, 46),
                 backgroundColor: Color(0xFFEBC272), // Button color

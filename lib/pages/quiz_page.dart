@@ -75,6 +75,7 @@ class _QuizPageState extends State<QuizPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Quiz'),
+        backgroundColor: Colors.transparent,
       ),
       body: Center(
         child: Column(

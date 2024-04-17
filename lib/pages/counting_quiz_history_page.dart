@@ -5,14 +5,15 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CountResultsPage extends StatelessWidget {
   final Map<String, List<Map<String, dynamic>>> quizResults;
-
-  const CountResultsPage({Key? key, required this.quizResults})
+  final int id;
+  const CountResultsPage({Key? key, required this.quizResults,required this.id})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // Filter out the results for quiz ID 2
-    final resultsForQuiz2 = quizResults['2'] ?? [];
+
+    final resultsForQuiz2 = quizResults[id] ?? [];
 
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +39,7 @@ class CountResultsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Quiz 2',
+                'Counting Quiz',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -48,7 +49,10 @@ class CountResultsPage extends StatelessWidget {
             // Chart for quiz results
             Container(
               height: 252,
-              color: Colors.white,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: SfCartesianChart(
                 primaryXAxis: CategoryAxis(title: AxisTitle(text: 'Attempt')),
                 primaryYAxis:
@@ -66,11 +70,15 @@ class CountResultsPage extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: 25),
             // ListView for individual attempts
             Center(
               child: Container(
-                width: 80,
-                height: 500,
+                width: 286,
+                height: MediaQuery.of(context).size.height -
+                    252 -
+                    70 -
+                    AppBar().preferredSize.height,
                 child: SingleChildScrollView(
                   child: ListView.builder(
                     shrinkWrap: true,
@@ -78,19 +86,58 @@ class CountResultsPage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final result = resultsForQuiz2[index];
                       return Container(
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 247, 131,
-                              131), // Background color for the container
-                          borderRadius: BorderRadius.circular(
-                              15), // Radius for the curved corners
-                        ),
-                        child: ListTile(
-                          minLeadingWidth: 100,
-                          title: Text('Attempt ${index + 1}'),
-                          subtitle: Text(
-                              'Average Result: ${result['average_result']}'),
-                        ),
-                      );
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 255, 255,
+                                255), // Background color for the container
+                            borderRadius: BorderRadius.circular(
+                                15), // Radius for the curved corners
+                          ),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                top: 15,
+                                left: 10,
+                                child: Container(
+                                  height: 20,
+                                  width: 95,
+                                  decoration: BoxDecoration(
+                                    color: Color(
+                                        0xFF373737), // Adjusted color value for the first container
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Center(
+                                      child: Text(
+                                    'Attempt ${index + 1}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  )),
+                                ),
+                              ),
+                              Positioned(
+                                top:
+                                    15, // Adjust this value as needed to separate the two containers
+                                left: 150,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(
+                                        0xFFF8E191), // Adjusted color value for the second container
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                        'Average Result:\n ${result['average_result']}'),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                  top: 45,
+                                  left: 10,
+                                  child: Text("Date: \nTime: "))
+                            ],
+                          ));
                     },
                   ),
                 ),
