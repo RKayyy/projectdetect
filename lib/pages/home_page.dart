@@ -18,6 +18,7 @@ import 'package:projectssrk/pages/profile_page.dart';
 class HomePage extends StatelessWidget {
   dynamic listfromresult;
   bool isFirstAttempt;
+  
 
   HomePage({Key? key, this.listfromresult})
       : isFirstAttempt = listfromresult == null,
@@ -42,6 +43,7 @@ class HomePage extends StatelessWidget {
     User? user = FirebaseAuth.instance.currentUser;
     String uid = user?.uid ?? ""; // Fetch the UID
     print("User UID: $uid");
+    print(user);
 
     // Pass the UID to the ResultHistoryPage
     Navigator.push(
@@ -71,13 +73,13 @@ class HomePage extends StatelessWidget {
         child: Align(
           alignment: Alignment.topCenter,
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-            const SizedBox(height: 55),
+            const SizedBox(height: 45),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 180.0,
-                  height: 70.0,
+                  height: 50.0,
                   decoration: BoxDecoration(
                     color: Colors.transparent, // Transparent background
                     borderRadius:
@@ -87,12 +89,16 @@ class HomePage extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      "Hi ${user.displayName} !",
-                      style: TextStyle(fontSize: 18.0),
+                      "Hi there!",
+                      style: TextStyle(fontSize: 22.0,
+                      fontFamily: AutofillHints.birthdayDay, fontWeight: FontWeight.bold, ),
                     ),
                   ),
                 ),
-                SizedBox(width: 60,),
+                SizedBox(
+                  width: 50,
+                ),
+                
                 PopupMenuButton(
                   child: ClipRRect(
                     child: Icon(
@@ -207,6 +213,7 @@ class HomePage extends StatelessWidget {
                                   const SizedBox(
                                     height: 12,
                                   ),
+                                  
                                   Container(
                                     height: 100,
                                     width: 90,
@@ -216,7 +223,9 @@ class HomePage extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(
                                           10), // Add rounded corners
                                     ),
+                                    
                                     child: Align(
+                                      
                                       alignment: Alignment.center,
                                       child: Text(
                                         " Total Questions: 5 \n \n Correct: ${((listfromresult["counting"]?.fold(0, (a, b) => a + b) ?? 0)).toStringAsFixed(0)} \nIncorrect: ${(5 - (listfromresult["counting"]?.fold(0, (a, b) => a + b) ?? 0)).toStringAsFixed(2)}",
@@ -235,26 +244,28 @@ class HomePage extends StatelessWidget {
                             const SizedBox(
                               width: 25,
                             ),
-                            Positioned(
-                              right: 0,
-                              top: 015,
-                              child: CircularPercentIndicator(
-                                radius: 80.0,
-                                lineWidth: 12.0,
-                                percent: (listfromresult["counting"]
-                                            ?.fold(0, (a, b) => a + b) ??
-                                        0) /
-                                    12.5,
-                                center: Text(
-                                  "${((listfromresult["counting"]?.fold(0, (a, b) => a + b) ?? 0) / 12.5 * 100).toStringAsFixed(2)}%",
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                                progressColor: Color(0xFFEBC272),
-                                backgroundColor: Color(0xFF373737),
-                              ),
-                            )
                           ],
                         ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0,0,30.0,0),
+                            child: CircularPercentIndicator(
+                              radius: 70.0,
+                              lineWidth: 12.0,
+                              percent: (listfromresult["counting"]
+                                          ?.fold(0, (a, b) => a + b) ??
+                                      0) /
+                                  12.5,
+                              center: Text(
+                                "${((listfromresult["counting"]?.fold(0, (a, b) => a + b) ?? 0) / 12.5 * 100).toStringAsFixed(2)}%",
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                              progressColor: Color(0xFFEBC272),
+                              backgroundColor: Color(0xFF373737),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   )
@@ -343,19 +354,20 @@ class HomePage extends StatelessWidget {
                               const SizedBox(
                                 width: 25,
                               ),
-                              Positioned(
-                                right: 0,
-                                top: 015,
-                                child: CircularPercentIndicator(
-                                  radius: 80.0,
-                                  lineWidth: 12.0,
-                                  percent: 0,
-                                  center: Text(
-                                    "0%",
-                                    style: TextStyle(fontSize: 16.0),
+                              Align(
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(20,0,0,0),
+                                  child: CircularPercentIndicator(
+                                    radius: 70.0,
+                                    lineWidth: 12.0,
+                                    percent: 0,
+                                    center: Text(
+                                      "0%",
+                                      style: TextStyle(fontSize: 16.0),
+                                    ),
+                                    progressColor: Color(0xFFEBC272),
+                                    backgroundColor: Color(0xFF373737),
                                   ),
-                                  progressColor: Color(0xFFEBC272),
-                                  backgroundColor: Color(0xFF373737),
                                 ),
                               )
                             ],
@@ -448,26 +460,29 @@ class HomePage extends StatelessWidget {
                             const SizedBox(
                               width: 25,
                             ),
-                            Positioned(
-                              right: 0,
-                              top: 015,
-                              child: CircularPercentIndicator(
-                                radius: 80.0,
-                                lineWidth: 12.0,
-                                percent: (listfromresult["coloring"]
-                                            ?.fold(0, (a, b) => a + b) ??
-                                        0) /
-                                    12.5,
-                                center: Text(
-                                  "${((listfromresult["coloring"]?.fold(0, (a, b) => a + b) ?? 0) / 12.5 * 100).toStringAsFixed(2)}%",
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                                progressColor: Color(0xFFEBC272),
-                                backgroundColor: Color(0xFF373737),
-                              ),
-                            )
+                            
                           ],
                         ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(0,0,30.0,0),
+                                child: CircularPercentIndicator(
+                                  radius: 70.0,
+                                  lineWidth: 12.0,
+                                  percent: (listfromresult["coloring"]
+                                              ?.fold(0, (a, b) => a + b) ??
+                                          0) /
+                                      12.5,
+                                  center: Text(
+                                    "${((listfromresult["coloring"]?.fold(0, (a, b) => a + b) ?? 0) / 12.5 * 100).toStringAsFixed(2)}%",
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                  progressColor: Color(0xFFEBC272),
+                                  backgroundColor: Color(0xFF373737),
+                                ),
+                              ),
+                            )
                       ],
                     ),
                   )
@@ -555,19 +570,20 @@ class HomePage extends StatelessWidget {
                             const SizedBox(
                               width: 25,
                             ),
-                            Positioned(
-                              right: 0,
-                              top: 015,
-                              child: CircularPercentIndicator(
-                                radius: 80.0,
-                                lineWidth: 12.0,
-                                percent: 0,
-                                center: Text(
-                                  "0%",
-                                  style: TextStyle(fontSize: 16.0),
+                            Align(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(20,0,0,0),
+                                child: CircularPercentIndicator(
+                                  radius: 70.0,
+                                  lineWidth: 12.0,
+                                  percent: 0,
+                                  center: Text(
+                                    "0%",
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                  progressColor: Color(0xFFEBC272),
+                                  backgroundColor: Color(0xFF373737),
                                 ),
-                                progressColor: Color(0xFFEBC272),
-                                backgroundColor: Color(0xFF373737),
                               ),
                             )
                           ],
@@ -661,26 +677,30 @@ class HomePage extends StatelessWidget {
                             const SizedBox(
                               width: 25,
                             ),
-                            Positioned(
-                              right: 0,
-                              top: 015,
-                              child: CircularPercentIndicator(
-                                radius: 80.0,
-                                lineWidth: 12.0,
-                                percent: (listfromresult["calculate"]
-                                            ?.fold(0, (a, b) => a + b) ??
-                                        0) /
-                                    12.5,
-                                center: Text(
-                                  "${((listfromresult["calculate"]?.fold(0, (a, b) => a + b) ?? 0) / 12.5 * 100).toStringAsFixed(2)}%",
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                                progressColor: Color(0xFFEBC272),
-                                backgroundColor: Color(0xFF373737),
-                              ),
-                            )
+                            
                           ],
                         ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                              child: Padding(
+                                
+                                padding: const EdgeInsets.fromLTRB(0,0,30.0,0),
+                                child: CircularPercentIndicator(
+                                  radius: 70.0,
+                                  lineWidth: 12.0,
+                                  percent: (listfromresult["calculate"]
+                                              ?.fold(0, (a, b) => a + b) ??
+                                          0) /
+                                      12.5,
+                                  center: Text(
+                                    "${((listfromresult["calculate"]?.fold(0, (a, b) => a + b) ?? 0) / 12.5 * 100).toStringAsFixed(2)}%",
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                  progressColor: Color(0xFFEBC272),
+                                  backgroundColor: Color(0xFF373737),
+                                ),
+                              ),
+                            )
                       ],
                     ),
                   )
@@ -769,19 +789,20 @@ class HomePage extends StatelessWidget {
                               const SizedBox(
                                 width: 25,
                               ),
-                              Positioned(
-                                right: 0,
-                                top: 015,
-                                child: CircularPercentIndicator(
-                                  radius: 80.0,
-                                  lineWidth: 12.0,
-                                  percent: 0,
-                                  center: Text(
-                                    "0%",
-                                    style: TextStyle(fontSize: 16.0),
+                              Align(
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(20,0,0,0),
+                                  child: CircularPercentIndicator(
+                                    radius: 70.0,
+                                    lineWidth: 12.0,
+                                    percent: 0,
+                                    center: Text(
+                                      "0%",
+                                      style: TextStyle(fontSize: 16.0),
+                                    ),
+                                    progressColor: Color(0xFFEBC272),
+                                    backgroundColor: Color(0xFF373737),
                                   ),
-                                  progressColor: Color(0xFFEBC272),
-                                  backgroundColor: Color(0xFF373737),
                                 ),
                               )
                             ],
@@ -842,19 +863,20 @@ class HomePage extends StatelessWidget {
                         Row(
                           children: [
                             QuizTypeButton(
-                              button_color: Color.fromARGB(255, 255, 213, 231),
-                              button_text: "Coloring",
-                              questions: questions_color,
-                              quizType: 'coloring',
-                              buttonImage: 'lib/images/coloring_button_img.png',
-                            ),
-                            QuizTypeButton(
                               button_color: Color(0xFFCFFFDF),
                               button_text: 'Counting',
                               questions: questions_count,
                               quizType: 'counting',
                               buttonImage: 'lib/images/counting_button_img.png',
                             ),
+                            QuizTypeButton(
+                              button_color: Color.fromARGB(255, 255, 213, 231),
+                              button_text: "Coloring",
+                              questions: questions_color,
+                              quizType: 'coloring',
+                              buttonImage: 'lib/images/coloring_button_img.png',
+                            ),
+                            
                           ],
                         ),
                         Row(

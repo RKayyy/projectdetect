@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:projectssrk/pages/auth_page.dart';
+import 'package:projectssrk/pages/home_page.dart';
 import 'package:projectssrk/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lottie/lottie.dart';
+import 'package:projectssrk/pages/user_details_page.dart';
 import 'firebase_options.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoadingPage(), // Use the loading page initially
+      home: HomePage(), // Use the loading page initially
     );
   }
 }
