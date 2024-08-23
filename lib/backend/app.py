@@ -103,6 +103,7 @@ def predict():
 
     except Exception as e:
         return jsonify({'error': str(e)})
+    
 @app.route('/prediction_table/<string:firebase_uid>', methods=['GET'])
 def get_prediction_table(firebase_uid):
     try:

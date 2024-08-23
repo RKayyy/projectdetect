@@ -5,14 +5,15 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CountResultsPage extends StatelessWidget {
   final Map<String, List<Map<String, dynamic>>> quizResults;
-  final int id;
-  const CountResultsPage({Key? key, required this.quizResults,required this.id})
+  final String id;
+  const CountResultsPage(
+      {Key? key, required this.quizResults, required this.id})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // Filter out the results for quiz ID 2
-
+    final String quizId = id.toString();
     final resultsForQuiz2 = quizResults[id] ?? [];
 
     return Scaffold(
