@@ -99,27 +99,27 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(height: 16),
               Column(
                 children: [
-                  Container(
-                    width: 270,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Color(0xFFEBC272)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'User ID:\n',
-                          style: TextStyle(fontSize: 12),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '$_uid',
-                          style: TextStyle(fontSize: 20),
-                        )
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   width: 270,
+                  //   decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(15),
+                  //       color: Color(0xFFEBC272)),
+                  //   child: Column(
+                  //     mainAxisAlignment: MainAxisAlignment.start,
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Text(
+                  //         'User ID:\n',
+                  //         style: TextStyle(fontSize: 12),
+                  //         textAlign: TextAlign.left,
+                  //       ),
+                  //       Text(
+                  //         '$_uid',
+                  //         style: TextStyle(fontSize: 20),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   Container(
                     width: 270,
                     decoration: BoxDecoration(
@@ -133,11 +133,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Text(
                           '${_userDetails['child_name'] ?? 'N/A'}',
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
                   ),
+                  SizedBox(height: 5,),
                   Container(
                     width: 270,
                     decoration: BoxDecoration(
@@ -151,11 +152,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Text(
                           '${_userDetails['child_age'] ?? 'N/A'}',
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
                   ),
+                  SizedBox(height: 5,),
                   Container(
                     width: 270,
                     decoration: BoxDecoration(
@@ -169,11 +171,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Text(
                           '${_userDetails['parent_name'] ?? 'N/A'}',
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
                   ),
+                  SizedBox(height: 5,),
                   Container(
                     width: 270,
                     decoration: BoxDecoration(
@@ -187,11 +190,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Text(
                           '${_userDetails['parent_phone_number'] ?? 'N/A'}',
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
                   ),
+                  SizedBox(height: 5,),
                   Container(
                     width: 270,
                     decoration: BoxDecoration(
@@ -205,7 +209,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Text(
                           '${_userDetails['address'] ?? 'N/A'}',
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
