@@ -212,7 +212,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 const SizedBox(width: 20),
                                 Text(
-                                  'CountCandy',
+                                  'PuzzlePlay',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 43,
