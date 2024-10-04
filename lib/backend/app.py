@@ -103,6 +103,7 @@ def predict():
 
     except Exception as e:
         return jsonify({'error': str(e)})
+    
 @app.route('/prediction_table/<string:firebase_uid>', methods=['GET'])
 def get_prediction_table(firebase_uid):
     try:
@@ -265,7 +266,7 @@ def result_history(firebase_uid):
 
 if __name__ == '__main__':
     with app.app_context():
-        # db.drop_all()  
+        db.drop_all()  
         db.create_all()
 
-    app.run(debug=True,port=5566) # here i changed the port because it was showing 5000 is already in use
+    app.run(debug=True,port=5566)

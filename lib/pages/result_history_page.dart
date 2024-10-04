@@ -79,7 +79,7 @@ class _ResultHistoryPageState extends State<ResultHistoryPage> {
       }
       groupedResults[quizId]!.add(result);
     }
-
+    print(groupedResults);
     return groupedResults;
   }
 
@@ -184,7 +184,7 @@ class _ResultHistoryPageState extends State<ResultHistoryPage> {
                   MaterialPageRoute(
                     builder: (context) => CountResultsPage(
                       quizResults: groupResultsByQuiz(),
-                      id: 2,
+                      id: '2',
                     ),
                   ),
                 ); // Go back to the home page
@@ -210,7 +210,7 @@ class _ResultHistoryPageState extends State<ResultHistoryPage> {
                   MaterialPageRoute(
                     builder: (context) => CountResultsPage(
                       quizResults: groupResultsByQuiz(),
-                      id: 1,
+                      id: '1',
                     ),
                   ),
                 ); // Go back to the home page
@@ -236,7 +236,7 @@ class _ResultHistoryPageState extends State<ResultHistoryPage> {
                   MaterialPageRoute(
                     builder: (context) => CountResultsPage(
                       quizResults: groupResultsByQuiz(),
-                      id: 3,
+                      id: '3',
                     ),
                   ),
                 ); // Go back to the home page
