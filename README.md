@@ -59,11 +59,6 @@ Ensure the following are installed:
 3. Speech-to-text features can be used in the quizzes to assess verbal responses.
 4. Monitor progress through visual graphs showing accuracy, quiz attempts, and prediction trends.
 
-### Example
-
-![Quiz Page](path_to_image)
-
----
 
 ## Project Structure
 
