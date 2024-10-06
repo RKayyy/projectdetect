@@ -33,7 +33,7 @@ Ensure the following are installed:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/zedhog2002/projectdetect.git
+    git clone https://github.com/RKayyy/projectdetect.git
     ```
 2. Navigate to the project directory:
     ```bash
